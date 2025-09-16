@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>问卷数据统计</title>
+  <!-- 引入Layui CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/layui-src/dist/css/layui.css">
+  <!-- 引入Font Awesome -->
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <!-- 引入ECharts -->
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+  
+  <style>
+    body {
+      background-color: #f2f3f5;
+      margin: 0;
+      padding: 20px;
+    }
+    
+    .title {
+      font-size: 20px;
+      color: #333;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    
+    .stats-summary {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+    
+    .stat-item {
+      background: white;
+      padding: 15px;
+      border-radius: 6px;
+      text-align: center;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    
+    .stat-item .value {
+      font-size: 24px;
+      font-weight: bold;
+      color: #1E9FFF;
+      margin: 5px 0;
+    }
+    
+    .stat-item .label {
+      font-size: 14px;
+      color: #666;
+    }
+    
+    .charts-area {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+    
+    @media (min-width: 768px) {
+      .charts-area {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    
+    .chart-box {
+      background: white;
+      border-radius: 6px;
+      padding: 15px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      height: 300px;
+    }
+    
+    .chart-title {
+      font-size: 16px;
+      margin-bottom: 15px;
+      color: #333;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .question-stats {
+      margin-top: 25px;
+    }
+    
+    .question-title {
+      font-size: 16px;
+      margin: 15px 0;
+      color: #333;
+    }
+    
+    .answer-dist {
+      background: white;
+      border-radius: 6px;
+      padding: 15px;
+      margin-bottom: 20px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    
+    .progress-item {
+      margin-bottom: 10px;
+    }
+    
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 5px;
+      font-size: 14px;
+    }
+    
+    .layui-progress {
+      height: 8px;
+    }
+  </style>
+</head>
+
+<body>
+  <h1 class="title">客户满意度调查 - 数据统计</h1>
+  
+  <!-- 核心统计指标 -->
+  <div class="stats-summary">
+    <div class="stat-item">
+      <i class="fa fa-list-alt" style="color:#1E9FFF"></i>
+      <div class="value">128</div>
+      <div class="label">总答卷数</div>
+    </div>
+    <div class="stat-item">
+      <i class="fa fa-clock-o" style="color:#009688"></i>
+      <div class="value">3.2分钟</div>
+      <div class="label">平均用时</div>
+    </div>
+    <div class="stat-item">
+      <i class="fa fa-star" style="color:#FFB800"></i>
+      <div class="value">4.2</div>
+      <div class="label">平均满意度</div>
+    </div>
+    <div class="stat-item">
+      <i class="fa fa-calendar" style="color:#FF5722"></i>
+      <div class="value">68%</div>
+      <div class="label">完成率</div>
+    </div>
+  </div>
+  
+  <!-- 主要图表区域 -->
+  <div class="charts-area">
+    <div class="chart-box">
+      <div class="chart-title">性别分布分布</div>
+      <div id="gender-chart" style="width:100%; height:250px;"></div>
+    </div>
+    <div class="chart-box">
+      <div class="chart-title">年龄段分布</div>
+      <div id="age-chart" style="width:100%; height:250px;"></div>
+    </div>
+  </div>
+  
+  <!-- 问题统计详情 -->
+  <div class="question-stats">
+    <div class="question-title">3. 产品满意度分布</div>
+    <div class="answer-dist">
+      <div class="progress-item">
+        <div class="progress-label">
+          <span>非常满意</span>
+          <span>42%</span>
+        </div>
+        <div class="layui-progress" lay-filter="progress1">
+          <div class="layui-progress-bar" lay-percent="42%" style="background-color:#009688"></div>
+        </div>
+      </div>
+      <div class="progress-item">
+        <div class="progress-label">
+          <span>比较满意</span>
+          <span>31%</span>
+        </div>
+        <div class="layui-progress" lay-filter="progress2">
+          <div class="layui-progress-bar" lay-percent="31%" style="background-color:#1E9FFF"></div>
+        </div>
+      </div>
+      <div class="progress-item">
+        <div class="progress-label">
+          <span>一般</span>
+          <span>18%</span>
+        </div>
+        <div class="layui-progress" lay-filter="progress3">
+          <div class="layui-progress-bar" lay-percent="18%" style="background-color:#FFB800"></div>
+        </div>
+      </div>
+      <div class="progress-item">
+        <div class="progress-label">
+          <span>不满意</span>
+          <span>9%</span>
+        </div>
+        <div class="layui-progress" lay-filter="progress4">
+          <div class="layui-progress-bar" lay-percent="9%" style="background-color:#FF5722"></div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="question-title">4. 产品优点选择</div>
+    <div class="chart-box">
+      <div id="advantages-chart" style="width:100%; height:250px;"></div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/layui-src/dist/layui.js"></script>
+  <script>
+    layui.use(['element'], function() {
+      var element = layui.element;
+      
+      // 初始化图表
+      window.onload = function() {
+        // 性别分布图表
+        var genderChart = echarts.init(document.getElementById('gender-chart'));
+        genderChart.setOption({
+          tooltip: {
+            trigger: 'item'
+          },
+          legend: {
+            orient: 'horizontal',
+            bottom: 0
+          },
+          series: [
+            {
+              name: '性别',
+              type: 'pie',
+              radius: ['40%', '70%'],
+              avoidLabelOverlap: false,
+              itemStyle: {
+                borderRadius: 4,
+                borderColor: '#fff',
+                borderWidth: 2
+              },
+              label: {
+                show: false,
+                position: 'center'
+              },
+              emphasis: {
+                label: {
+                  show: true,
+                  fontSize: 16,
+                  fontWeight: 'bold'
+                }
+              },
+              labelLine: {
+                show: false
+              },
+              data: [
+                { value: 68, name: '男' },
+                { value: 60, name: '女' }
+              ]
+            }
+          ]
+        });
+        
+        // 年龄段分布图表
+        var ageChart = echarts.init(document.getElementById('age-chart'));
+        ageChart.setOption({
+          tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+              type: 'shadow'
+            }
+          },
+          grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+          },
+          xAxis: {
+            type: 'category',
+            data: ['18-25', '26-35', '36-45', '46+']
+          },
+          yAxis: {
+            type: 'value'
+          },
+          series: [
+            {
+              name: '人数',
+              type: 'bar',
+              data: [32, 56, 28, 12],
+              itemStyle: {
+                color: '#1E9FFF'
+              }
+            }
+          ]
+        });
+        
+        // 产品优点图表
+        var advantagesChart = echarts.init(document.getElementById('advantages-chart'));
+        advantagesChart.setOption({
+          tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+              type: 'shadow'
+            }
+          },
+          grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+          },
+          xAxis: {
+            type: 'value'
+          },
+          yAxis: {
+            type: 'category',
+            data: ['价格合理', '质量可靠', '服务好', '其他']
+          },
+          series: [
+            {
+              name: '选择人数',
+              type: 'bar',
+              data: [86, 92, 78, 15],
+              itemStyle: {
+                color: '#009688'
+              },
+              label: {
+                show: true,
+                position: 'right'
+              }
+            }
+          ]
+        });
+        
+        // 响应窗口大小变化
+        window.addEventListener('resize', function() {
+          genderChart.resize();
+          ageChart.resize();
+          advantagesChart.resize();
+        });
+      };
+    });
+  </script>
+</body>
+</html>

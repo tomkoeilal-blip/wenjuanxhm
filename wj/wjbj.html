@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>问卷编辑</title>
+  <!-- 引入Layui CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/layui-src/dist/css/layui.css">
+  <!-- 引入Font Awesome -->
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  
+  <style>
+    body {
+      background-color: #f2f3f5;
+      padding: 20px;
+    }
+    
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    
+    .card {
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      padding: 25px;
+      margin-bottom: 20px;
+    }
+    
+    .header-actions {
+      text-align: right;
+      margin-bottom: 20px;
+    }
+    
+    .question-types {
+      margin-bottom: 25px;
+      padding: 15px;
+      background-color: #f9f9f9;
+      border-radius: 6px;
+    }
+    
+    .question-type-btn {
+      display: inline-flex;
+      align-items: center;
+      height: 36px;
+      line-height: 36px;
+      padding: 0 15px;
+      background-color: #fff;
+      color: #333;
+      font-size: 14px;
+      border: 1px solid #e6e6e6;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-right: 10px;
+      margin-bottom: 10px;
+      transition: all 0.2s;
+    }
+    
+    .question-type-btn i {
+      margin-right: 6px;
+    }
+    
+    .question-type-btn:hover {
+      color: #1E9FFF;
+      border-color: #1E9FFF;
+    }
+    
+    .questions-container {
+      min-height: 300px;
+    }
+    
+    .question-item {
+      position: relative;
+      padding: 15px;
+      border: 1px solid #e6e6e6;
+      border-radius: 6px;
+      margin-bottom: 15px;
+      transition: all 0.2s;
+    }
+    
+    .question-item:hover {
+      border-color: #1E9FFF;
+      background-color: #f9fbff;
+    }
+    
+    .question-header {
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+    }
+    
+    .question-title-input {
+      flex-grow: 1;
+      margin-right: 10px;
+    }
+    
+    .question-actions {
+      display: flex;
+      gap: 5px;
+    }
+    
+    .option-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    
+    .option-input {
+      flex-grow: 1;
+      margin-right: 10px;
+    }
+    
+    .add-option-btn {
+      margin-top: 10px;
+    }
+    
+    .layui-btn {
+      transition: all 0.2s;
+    }
+    
+    .layui-btn:hover {
+      transform: translateY(-1px);
+    }
+    
+    .required-checkbox {
+      margin-top: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="card">
+      <div class="header-actions">
+        <button id="save-btn" class="layui-btn layui-btn-primary">
+          <i class="fa fa-save"></i> 保存问卷
+        </button>
+      </div>
+      
+      <div class="layui-form-item">
+        <label class="layui-form-label">问卷标题</label>
+        <div class="layui-input-block">
+          <input type="text" id="survey-title" class="layui-input" placeholder="请输入问卷标题" value="我的调查问卷">
+        </div>
+      </div>
+      
+      <div class="layui-form-item">
+        <label class="layui-form-label">问卷描述</label>
+        <div class="layui-input-block">
+          <textarea id="survey-description" class="layui-textarea" placeholder="请输入问卷描述" rows="2">请根据实际情况填写以下问卷，感谢您的参与！</textarea>
+        </div>
+      </div>
+    </div>
+    
+    <div class="card">
+      <h3 style="margin-bottom: 15px; font-size: 16px; color: #333;">问题管理</h3>
+      
+      <div class="question-types">
+        <p style="margin-bottom: 10px; color: #666; font-size: 14px;">添加问题类型：</p>
+        <button class="question-type-btn" data-type="single">
+          <i class="fa fa-dot-circle-o"></i> 单选题
+        </button>
+        <button class="question-type-btn" data-type="multiple">
+          <i class="fa fa-check-square-o"></i> 多选题
+        </button>
+        <button class="question-type-btn" data-type="text">
+          <i class="fa fa-font"></i> 文本题
+        </button>
+      </div>
+      
+      <div id="questions-container" class="questions-container">
+        <!-- 示例问题：单选题 -->
+        <div class="question-item" data-type="single" data-id="q1">
+          <div class="question-header">
+            <input type="text" class="question-title-input layui-input" placeholder="请输入问题" value="您的性别是？">
+            <div class="question-actions">
+              <button class="move-btn layui-btn layui-btn-primary layui-btn-sm">
+                <i class="fa fa-arrows"></i>
+              </button>
+              <button class="delete-btn layui-btn layui-btn-danger layui-btn-sm">
+                <i class="fa fa-trash"></i>
+              </button>
+            </div>
+          </div>
+          
+          <div class="question-options">
+            <div class="option-item">
+              <input type="text" class="option-input layui-input" placeholder="选项内容" value="男">
+              <button class="delete-option-btn layui-btn layui-btn-danger layui-btn-sm layui-btn-icon"><i class="fa fa-times"></i></button>
+            </div>
+            <div class="option-item">
+              <input type="text" class="option-input layui-input" placeholder="选项内容" value="女">
+              <button class="delete-option-btn layui-btn layui-btn-danger layui-btn-sm layui-btn-icon"><i class="fa fa-times"></i></button>
+            </div>
+            <button class="add-option-btn layui-btn layui-btn-primary layui-btn-sm">
+              <i class="fa fa-plus"></i> 添加选项
+            </button>
+          </div>
+          
+          <div class="layui-form required-checkbox">
+            <input type="checkbox" name="required" lay-skin="primary" title="必填" checked>
+          </div>
+        </div>
+        
+        <!-- 示例问题：文本题 -->
+        <div class="question-item" data-type="text" data-id="q2">
+          <div class="question-header">
+            <input type="text" class="question-title-input layui-input" placeholder="请输入问题" value="您的联系方式是？">
+            <div class="question-actions">
+              <button class="move-btn layui-btn layui-btn-primary layui-btn-sm">
+                <i class="fa fa-arrows"></i>
+              </button>
+              <button class="delete-btn layui-btn layui-btn-danger layui-btn-sm">
+                <i class="fa fa-trash"></i>
+              </button>
+            </div>
+          </div>
+          
+          <div class="layui-form required-checkbox">
+            <input type="checkbox" name="required" lay-skin="primary" title="必填">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 引入Layui JS -->
+  <script src="https://cdn.jsdelivr.net/npm/layui-src/dist/layui.js"></script>
+  
+  <script>
+    // 初始化Layui模块
+    layui.use(['form', 'layer'], function() {
+      var form = layui.form;
+      var layer = layui.layer;
+      
+      // 问题计数器
+      var questionCount = document.querySelectorAll('.question-item').length;
+      
+      // 添加问题类型按钮点击事件
+      document.querySelectorAll('.question-type-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+          var type = this.getAttribute('data-type');
+          addNewQuestion(type);
+        });
+      });
+      
+      // 添加新问题
+      function addNewQuestion(type) {
+        questionCount++;
+        var questionId = 'q' + questionCount;
+        var questionHTML = '';
+        
+        switch(type) {
+          case 'single':
+            questionHTML = createSingleQuestion(questionId);
+            break;
+          case 'multiple':
+            questionHTML = createMultipleQuestion(questionId);
+            break;
+          case 'text':
+            questionHTML = createTextQuestion(questionId);
+            break;
+        }
+        
+        // 添加到容器
+        var tempDiv = document.createElement('div');
+        tempDiv.innerHTML = questionHTML;
+        document.getElementById('questions-container').appendChild(tempDiv.firstElementChild);
+        
+        // 重新初始化事件
+        initQuestionEvents();
+        form.render();
+        
+        layer.msg('已添加新问题');
+      }
+      
+      // 创建单选题HTML
+      function createSingleQuestion(id) {
+        return `
+          <div class="question-item" data-type="single" data-id="${id}">
+            <div class="question-header">
+              <input type="text" class="question-title-input layui-input" placeholder="请输入问题" value="新单选题">
+              <div class="question-actions">
+                <button class="move-btn layui-btn layui-btn-primary layui-btn-sm">
+                  <i class="fa fa-arrows"></i>
+                </button>
+                <button class="delete-btn layui-btn layui-btn-danger layui-btn-sm">
+                  <i class="fa fa-trash"></i>
+                </button>
+              </div>
+            </div>
+            
+            <div class="question-options">
+              <div class="option-item">
+                <input type="text" class="option-input layui-input" placeholder="选项内容" value="选项1">
+                <button class="delete-option-btn layui-btn layui-btn-danger layui-btn-sm layui-btn-icon"><i class="fa fa-times"></i></button>
+              </div>
+              <div class="option-item">
+                <input type="text" class="option-input layui-input" placeholder="选项内容" value="选项2">
+                <button class="delete-option-btn layui-btn layui-btn-danger layui-btn-sm layui-btn-icon"><i class="fa fa-times"></i></button>
+              </div>
+              <button class="add-option-btn layui-btn layui-btn-primary layui-btn-sm">
+                <i class="fa fa-plus"></i> 添加选项
+              </button>
+            </div>
+            
+            <div class="layui-form required-checkbox">
+              <input type="checkbox" name="required" lay-skin="primary" title="必填">
+            </div>
+          </div>
+        `;
+      }
+      
+      // 创建多选题HTML
+      function createMultipleQuestion(id) {
+        return `
+          <div class="question-item" data-type="multiple" data-id="${id}">
+            <div class="question-header">
+              <input type="text" class="question-title-input layui-input" placeholder="请输入问题" value="新多选题">
+              <div class="question-actions">
+                <button class="move-btn layui-btn layui-btn-primary layui-btn-sm">
+                  <i class="fa fa-arrows"></i>
+                </button>
+                <button class="delete-btn layui-btn layui-btn-danger layui-btn-sm">
+                  <i class="fa fa-trash"></i>
+                </button>
+              </div>
+            </div>
+            
+            <div class="question-options">
+              <div class="option-item">
+                <input type="text" class="option-input layui-input" placeholder="选项内容" value="选项1">
+                <button class="delete-option-btn layui-btn layui-btn-danger layui-btn-sm layui-btn-icon"><i class="fa fa-times"></i></button>
+              </div>
+              <div class="option-item">
+                <input type="text" class="option-input layui-input" placeholder="选项内容" value="选项2">
+                <button class="delete-option-btn layui-btn layui-btn-danger layui-btn-sm layui-btn-icon"><i class="fa fa-times"></i></button>
+              </div>
+              <button class="add-option-btn layui-btn layui-btn-primary layui-btn-sm">
+                <i class="fa fa-plus"></i> 添加选项
+              </button>
+            </div>
+            
+            <div class="layui-form required-checkbox">
+              <input type="checkbox" name="required" lay-skin="primary" title="必填">
+            </div>
+          </div>
+        `;
+      }
+      
+      // 创建文本题HTML
+      function createTextQuestion(id) {
+        return `
+          <div class="question-item" data-type="text" data-id="${id}">
+            <div class="question-header">
+              <input type="text" class="question-title-input layui-input" placeholder="请输入问题" value="新文本题">
+              <div class="question-actions">
+                <button class="move-btn layui-btn layui-btn-primary layui-btn-sm">
+                  <i class="fa fa-arrows"></i>
+                </button>
+                <button class="delete-btn layui-btn layui-btn-danger layui-btn-sm">
+                  <i class="fa fa-trash"></i>
+                </button>
+              </div>
+            </div>
+            
+            <div class="layui-form required-checkbox">
+              <input type="checkbox" name="required" lay-skin="primary" title="必填">
+            </div>
+          </div>
+        `;
+      }
+      
+      // 初始化问题相关事件
+      function initQuestionEvents() {
+        // 删除问题事件
+        document.querySelectorAll('.delete-btn').forEach(btn => {
+          btn.addEventListener('click', function() {
+            var questionItem = this.closest('.question-item');
+            var questionTitle = questionItem.querySelector('.question-title-input').value || '该问题';
+            
+            layer.confirm(`确定要删除"${questionTitle}"吗？`, function(index) {
+              questionItem.remove();
+              layer.close(index);
+            });
+          });
+        });
+        
+        // 添加选项事件
+        document.querySelectorAll('.add-option-btn').forEach(btn => {
+          btn.addEventListener('click', function() {
+            var optionsContainer = this.parentElement;
+            var optionCount = optionsContainer.querySelectorAll('.option-item').length + 1;
+            
+            var newOption = document.createElement('div');
+            newOption.className = 'option-item';
+            newOption.innerHTML = `
+              <input type="text" class="option-input layui-input" placeholder="选项内容" value="选项${optionCount}">
+              <button class="delete-option-btn layui-btn layui-btn-danger layui-btn-sm layui-btn-icon"><i class="fa fa-times"></i></button>
+            `;
+            
+            // 插入到添加按钮前面
+            optionsContainer.insertBefore(newOption, this);
+            
+            // 绑定删除选项事件
+            newOption.querySelector('.delete-option-btn').addEventListener('click', function() {
+              newOption.remove();
+            });
+          });
+        });
+        
+        // 删除选项事件
+        document.querySelectorAll('.delete-option-btn').forEach(btn => {
+          btn.addEventListener('click', function() {
+            this.closest('.option-item').remove();
+          });
+        });
+      }
+      
+      // 保存问卷按钮点击事件
+      document.getElementById('save-btn').addEventListener('click', function() {
+        // 收集问卷数据
+        var surveyData = {
+          title: document.getElementById('survey-title').value,
+          description: document.getElementById('survey-description').value,
+          questions: []
+        };
+        
+        // 收集问题数据
+        document.querySelectorAll('.question-item').forEach(question => {
+          var questionType = question.getAttribute('data-type');
+          var questionData = {
+            id: question.getAttribute('data-id'),
+            type: questionType,
+            title: question.querySelector('.question-title-input').value,
+            required: question.querySelector('input[name="required"]').checked,
+            options: []
+          };
+          
+          // 收集选项（单选和多选题）
+          if(questionType === 'single' || questionType === 'multiple') {
+            question.querySelectorAll('.option-input').forEach(option => {
+              questionData.options.push(option.value);
+            });
+          }
+          
+          surveyData.questions.push(questionData);
+        });
+        
+        // 模拟保存
+        console.log('保存的问卷数据:', surveyData);
+        
+        // 提示保存成功
+        layer.msg('问卷保存成功', {icon: 1});
+      });
+      
+      // 初始化事件
+      initQuestionEvents();
+      
+      // 初始化表单
+      form.render();
+    });
+  </script>
+</body>
+</html>

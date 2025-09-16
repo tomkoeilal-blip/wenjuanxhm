@@ -1,0 +1,254 @@
+<html><head>
+	<meta charset="utf-8">
+	<title>用户信息</title>
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<link rel="stylesheet" href="../lib/layui-v2.6.3/css/layui.css" media="all">
+	<link rel="stylesheet" href="../css/public.css" media="all">
+
+  </head>
+<body marginwidth="0" marginheight="0">
+<div class="layuimini-container">
+	<div class="layuimini-main">
+
+		<fieldset class="table-search-fieldset">
+			<legend>搜索信息</legend>
+			<div style="margin: 10px 10px 10px 10px">
+				<form class="layui-form layui-form-pane" action="">
+					<div class="layui-form-item">
+						<div class="layui-inline">
+							<label class="layui-form-label">姓名</label>
+							<div class="layui-input-inline">
+								<input type="text" name="realName" placeholder="请输入姓名" autocomplete="off" class="layui-input">
+							</div>
+						</div>
+						<div class="layui-inline">
+							<label class="layui-form-label">院系</label>
+							<div class="layui-input-inline">
+								<select>
+									<option value="1" selected="">软件学院</option>
+									<option value="2">电子信息工程学院</option>
+									<option value="3">机械电子工程学院</option>
+								</select><div class="layui-unselect layui-form-select"><div class="layui-select-title"><input type="text" placeholder="请选择" value="软件学院" readonly="" class="layui-input layui-unselect"><i class="layui-edge"></i></div><dl class="layui-anim layui-anim-upbit"><dd lay-value="1" class="layui-this">计算机科学与技术学院</dd><dd lay-value="2" class="">电子信息工程学院</dd><dd lay-value="3" class="">机械电子工程学院</dd></dl></div>
+							</div>
+						</div>
+						<div class="layui-inline">
+							<label class="layui-form-label">专业</label>
+							<div class="layui-input-inline">
+								<select>
+									<option value="1" selected="">软件工程</option>
+									<option value="2">计算机科学与技术</option>
+									<option value="3">网络工程</option>
+								</select>
+								<div class="layui-unselect layui-form-select"><div class="layui-select-title"><input type="text" placeholder="请选择" value="软件工程" readonly="" class="layui-input layui-unselect"><i class="layui-edge"></i></div><dl class="layui-anim layui-anim-upbit"><dd lay-value="1" class="layui-this">计算机科学与技术</dd><dd lay-value="2" class="">电子信息</dd><dd lay-value="3" class="">网络工程</dd></dl></div>
+							</div>
+						</div>
+						<div class="layui-inline">
+							<label class="layui-form-label">班级</label>
+							<div class="layui-input-inline">
+								<input type="text" name="classname" placeholder="请输入班级" autocomplete="off" class="layui-input">
+							</div>
+						</div>
+						<div class="layui-inline">
+							<label class="layui-form-label">年级</label>
+							<div class="layui-input-inline">
+								<input id="year" type="text" name="grade" placeholder="请选择入学年份" autocomplete="off" class="layui-input" lay-key="1">
+							</div>
+						</div>
+						<div class="layui-inline">
+							<button type="submit" class="layui-btn layui-btn-primary" lay-submit="" lay-filter="data-search-btn"><i class="layui-icon"></i> 搜 索</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</fieldset>
+
+		<script type="text/html" id="toolbarDemo">
+			<div class="layui-btn-container">
+				<button class="layui-btn layui-btn-normal layui-btn-sm data-add-btn" lay-event="add"> 添加用户 </button>
+				<button class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="delete"> 批量删除 </button>
+			</div>
+		</script>
+
+		<table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table><div class="layui-form layui-border-box layui-table-view" lay-filter="LAY-table-1" lay-id="currentTableId" style=" "><div class="layui-table-tool"><div class="layui-table-tool-temp"> <div class="layui-btn-container"> <button class="layui-btn layui-btn-normal layui-btn-sm data-add-btn" lay-event="add"> 添加用户 </button> <button class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="delete"> 批量删除 </button> </div> </div><div class="layui-table-tool-self"><div class="layui-inline" title="筛选列" lay-event="LAYTABLE_COLS"><i class="layui-icon layui-icon-cols"></i></div><div class="layui-inline" title="导出" lay-event="LAYTABLE_EXPORT"><i class="layui-icon layui-icon-export"></i></div><div class="layui-inline" title="打印" lay-event="LAYTABLE_PRINT"><i class="layui-icon layui-icon-print"></i></div><div class="layui-inline" title="提示" lay-event="LAYTABLE_TIPS"><i class="layui-icon layui-icon-tips"></i></div></div></div><div class="layui-table-box"><div class="layui-table-header"><table cellspacing="0" cellpadding="0" border="0" class="layui-table" lay-skin="line"><thead><tr><th data-field="0" data-key="1-0-0" data-unresize="true" class=" layui-table-col-special"><div class="layui-table-cell laytable-cell-1-0-0 laytable-cell-checkbox"><input type="checkbox" name="layTableCheckbox" lay-skin="primary" lay-filter="layTableAllChoose"><div class="layui-unselect layui-form-checkbox" lay-skin="primary"><i class="layui-icon layui-icon-ok"></i></div></div></th><th data-field="id" data-key="1-0-1" class=" layui-unselect"><div class="layui-table-cell laytable-cell-1-0-1"><span>ID</span><span class="layui-table-sort layui-inline"><i class="layui-edge layui-table-sort-asc" title="升序"></i><i class="layui-edge layui-table-sort-desc" title="降序"></i></span></div></th><th data-field="realname" data-key="1-0-2" class=""><div class="layui-table-cell laytable-cell-1-0-2"><span>姓名</span></div></th><th data-field="deptname" data-key="1-0-3" class=""><div class="layui-table-cell laytable-cell-1-0-3"><span>院系</span></div></th><th data-field="majorname" data-key="1-0-4" class=""><div class="layui-table-cell laytable-cell-1-0-4"><span>专业</span></div></th><th data-field="classname" data-key="1-0-5" class=""><div class="layui-table-cell laytable-cell-1-0-5"><span>班级</span></div></th><th data-field="grade" data-key="1-0-6" class=" layui-unselect"><div class="layui-table-cell laytable-cell-1-0-6"><span>年级</span><span class="layui-table-sort layui-inline"><i class="layui-edge layui-table-sort-asc" title="升序"></i><i class="layui-edge layui-table-sort-desc" title="降序"></i></span></div></th><th data-field="telephone" data-key="1-0-7" class=""><div class="layui-table-cell laytable-cell-1-0-7"><span>手机号码</span></div></th><th data-field="status" data-key="1-0-8" data-unresize="true" class=""><div class="layui-table-cell laytable-cell-1-0-8" align="center"><span>用户状态</span></div></th><th data-field="9" data-key="1-0-9" data-minwidth="130" class=" layui-table-col-special"><div class="layui-table-cell laytable-cell-1-0-9" align="center"><span>操作</span></div></th></tr></thead></table></div><div class="layui-table-body layui-table-main"><table cellspacing="0" cellpadding="0" border="0" class="layui-table" lay-skin="line"><tbody><tr data-index="0"><td data-field="0" data-key="1-0-0" class="layui-table-col-special"><div class="layui-table-cell laytable-cell-1-0-0 laytable-cell-checkbox"><input type="checkbox" name="layTableCheckbox" lay-skin="primary"><div class="layui-unselect layui-form-checkbox" lay-skin="primary"><i class="layui-icon layui-icon-ok"></i></div></div></td><td data-field="id" data-key="1-0-1" class=""><div class="layui-table-cell laytable-cell-1-0-1">10000</div></td><td data-field="realname" data-key="1-0-2" class=""><div class="layui-table-cell laytable-cell-1-0-2">张三</div></td><td data-field="deptname" data-key="1-0-3" class=""><div class="layui-table-cell laytable-cell-1-0-3">计算机科学与技术学院</div></td><td data-field="majorname" data-key="1-0-4" class=""><div class="layui-table-cell laytable-cell-1-0-4">计算机科学与技术</div></td><td data-field="classname" data-key="1-0-5" class=""><div class="layui-table-cell laytable-cell-1-0-5">计科一班</div></td><td data-field="grade" data-key="1-0-6" class=""><div class="layui-table-cell laytable-cell-1-0-6">大二</div></td><td data-field="telephone" data-key="1-0-7" class=""><div class="layui-table-cell laytable-cell-1-0-7">13545678767</div></td><td data-field="status" data-key="1-0-8" align="center" data-content="启用" class=""><div class="layui-table-cell laytable-cell-1-0-8"> <input type="checkbox" name="status" value="undefined" checked="" lay-skin="switch" lay-text="启用|禁用" lay-event="open" lay-filter="modifystatus"><div class="layui-unselect layui-form-switch layui-form-onswitch" lay-skin="_switch"><em>启用</em><i></i></div> </div></td><td data-field="9" data-key="1-0-9" align="center" data-off="true" data-minwidth="130" class="layui-table-col-special"><div class="layui-table-cell laytable-cell-1-0-9"> <a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="detail">查看详情</a> <a class="layui-btn layui-btn-xs data-count-edit" lay-event="edit">修改</a> <a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a> </div></td></tr><tr data-index="1"><td data-field="0" data-key="1-0-0" class="layui-table-col-special"><div class="layui-table-cell laytable-cell-1-0-0 laytable-cell-checkbox"><input type="checkbox" name="layTableCheckbox" lay-skin="primary"><div class="layui-unselect layui-form-checkbox" lay-skin="primary"><i class="layui-icon layui-icon-ok"></i></div></div></td><td data-field="id" data-key="1-0-1" class=""><div class="layui-table-cell laytable-cell-1-0-1">10001</div></td><td data-field="realname" data-key="1-0-2" class=""><div class="layui-table-cell laytable-cell-1-0-2">王五</div></td><td data-field="deptname" data-key="1-0-3" class=""><div class="layui-table-cell laytable-cell-1-0-3">计算机科学与技术学院</div></td><td data-field="majorname" data-key="1-0-4" class=""><div class="layui-table-cell laytable-cell-1-0-4">软件工程</div></td><td data-field="classname" data-key="1-0-5" class=""><div class="layui-table-cell laytable-cell-1-0-5">软工二班</div></td><td data-field="grade" data-key="1-0-6" class=""><div class="layui-table-cell laytable-cell-1-0-6">大三</div></td><td data-field="telephone" data-key="1-0-7" class=""><div class="layui-table-cell laytable-cell-1-0-7">13834523412</div></td><td data-field="status" data-key="1-0-8" align="center" data-content="启用" class=""><div class="layui-table-cell laytable-cell-1-0-8"> <input type="checkbox" name="status" value="undefined" checked="" lay-skin="switch" lay-text="启用|禁用" lay-event="open" lay-filter="modifystatus"><div class="layui-unselect layui-form-switch layui-form-onswitch" lay-skin="_switch"><em>启用</em><i></i></div> </div></td><td data-field="9" data-key="1-0-9" align="center" data-off="true" data-minwidth="130" class="layui-table-col-special"><div class="layui-table-cell laytable-cell-1-0-9"> <a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="detail">查看详情</a> <a class="layui-btn layui-btn-xs data-count-edit" lay-event="edit">修改</a> <a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a> </div></td></tr><tr data-index="2"><td data-field="0" data-key="1-0-0" class="layui-table-col-special"><div class="layui-table-cell laytable-cell-1-0-0 laytable-cell-checkbox"><input type="checkbox" name="layTableCheckbox" lay-skin="primary"><div class="layui-unselect layui-form-checkbox" lay-skin="primary"><i class="layui-icon layui-icon-ok"></i></div></div></td><td data-field="id" data-key="1-0-1" class=""><div class="layui-table-cell laytable-cell-1-0-1">10002</div></td><td data-field="realname" data-key="1-0-2" class=""><div class="layui-table-cell laytable-cell-1-0-2">李四</div></td><td data-field="deptname" data-key="1-0-3" class=""><div class="layui-table-cell laytable-cell-1-0-3">计算机科学与技术学院</div></td><td data-field="majorname" data-key="1-0-4" class=""><div class="layui-table-cell laytable-cell-1-0-4">计算机科学与技术</div></td><td data-field="classname" data-key="1-0-5" class=""><div class="layui-table-cell laytable-cell-1-0-5">计科一班</div></td><td data-field="grade" data-key="1-0-6" class=""><div class="layui-table-cell laytable-cell-1-0-6">大二</div></td><td data-field="telephone" data-key="1-0-7" class=""><div class="layui-table-cell laytable-cell-1-0-7">13545678767</div></td><td data-field="status" data-key="1-0-8" align="center" data-content="启用" class=""><div class="layui-table-cell laytable-cell-1-0-8"> <input type="checkbox" name="status" value="undefined" checked="" lay-skin="switch" lay-text="启用|禁用" lay-event="open" lay-filter="modifystatus"><div class="layui-unselect layui-form-switch layui-form-onswitch" lay-skin="_switch"><em>启用</em><i></i></div> </div></td><td data-field="9" data-key="1-0-9" align="center" data-off="true" data-minwidth="130" class="layui-table-col-special"><div class="layui-table-cell laytable-cell-1-0-9"> <a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="detail">查看详情</a> <a class="layui-btn layui-btn-xs data-count-edit" lay-event="edit">修改</a> <a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a> </div></td></tr><tr data-index="3"><td data-field="0" data-key="1-0-0" class="layui-table-col-special"><div class="layui-table-cell laytable-cell-1-0-0 laytable-cell-checkbox"><input type="checkbox" name="layTableCheckbox" lay-skin="primary"><div class="layui-unselect layui-form-checkbox" lay-skin="primary"><i class="layui-icon layui-icon-ok"></i></div></div></td><td data-field="id" data-key="1-0-1" class=""><div class="layui-table-cell laytable-cell-1-0-1">10003</div></td><td data-field="realname" data-key="1-0-2" class=""><div class="layui-table-cell laytable-cell-1-0-2">张三</div></td><td data-field="deptname" data-key="1-0-3" class=""><div class="layui-table-cell laytable-cell-1-0-3">电子信息工程学院</div></td><td data-field="majorname" data-key="1-0-4" class=""><div class="layui-table-cell laytable-cell-1-0-4">电子信息</div></td><td data-field="classname" data-key="1-0-5" class=""><div class="layui-table-cell laytable-cell-1-0-5">电信一班</div></td><td data-field="grade" data-key="1-0-6" class=""><div class="layui-table-cell laytable-cell-1-0-6">大二</div></td><td data-field="telephone" data-key="1-0-7" class=""><div class="layui-table-cell laytable-cell-1-0-7">18045678767</div></td><td data-field="status" data-key="1-0-8" align="center" data-content="启用" class=""><div class="layui-table-cell laytable-cell-1-0-8"> <input type="checkbox" name="status" value="undefined" checked="" lay-skin="switch" lay-text="启用|禁用" lay-event="open" lay-filter="modifystatus"><div class="layui-unselect layui-form-switch layui-form-onswitch" lay-skin="_switch"><em>启用</em><i></i></div> </div></td><td data-field="9" data-key="1-0-9" align="center" data-off="true" data-minwidth="130" class="layui-table-col-special"><div class="layui-table-cell laytable-cell-1-0-9"> <a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="detail">查看详情</a> <a class="layui-btn layui-btn-xs data-count-edit" lay-event="edit">修改</a> <a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a> </div></td></tr><tr data-index="4"><td data-field="0" data-key="1-0-0" class="layui-table-col-special"><div class="layui-table-cell laytable-cell-1-0-0 laytable-cell-checkbox"><input type="checkbox" name="layTableCheckbox" lay-skin="primary"><div class="layui-unselect layui-form-checkbox" lay-skin="primary"><i class="layui-icon layui-icon-ok"></i></div></div></td><td data-field="id" data-key="1-0-1" class=""><div class="layui-table-cell laytable-cell-1-0-1">10004</div></td><td data-field="realname" data-key="1-0-2" class=""><div class="layui-table-cell laytable-cell-1-0-2">张三</div></td><td data-field="deptname" data-key="1-0-3" class=""><div class="layui-table-cell laytable-cell-1-0-3">计算机科学与技术学院</div></td><td data-field="majorname" data-key="1-0-4" class=""><div class="layui-table-cell laytable-cell-1-0-4">计算机科学与技术</div></td><td data-field="classname" data-key="1-0-5" class=""><div class="layui-table-cell laytable-cell-1-0-5">计科一班</div></td><td data-field="grade" data-key="1-0-6" class=""><div class="layui-table-cell laytable-cell-1-0-6">大二</div></td><td data-field="telephone" data-key="1-0-7" class=""><div class="layui-table-cell laytable-cell-1-0-7">13545678767</div></td><td data-field="status" data-key="1-0-8" align="center" data-content="禁用" class=""><div class="layui-table-cell laytable-cell-1-0-8"> <input type="checkbox" name="status" value="undefined" checked="" lay-skin="switch" lay-text="启用|禁用" lay-event="open" lay-filter="modifystatus"><div class="layui-unselect layui-form-switch layui-form-onswitch" lay-skin="_switch"><em>启用</em><i></i></div> </div></td><td data-field="9" data-key="1-0-9" align="center" data-off="true" data-minwidth="130" class="layui-table-col-special"><div class="layui-table-cell laytable-cell-1-0-9"> <a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="detail">查看详情</a> <a class="layui-btn layui-btn-xs data-count-edit" lay-event="edit">修改</a> <a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a> </div></td></tr><tr data-index="5"><td data-field="0" data-key="1-0-0" class="layui-table-col-special"><div class="layui-table-cell laytable-cell-1-0-0 laytable-cell-checkbox"><input type="checkbox" name="layTableCheckbox" lay-skin="primary"><div class="layui-unselect layui-form-checkbox" lay-skin="primary"><i class="layui-icon layui-icon-ok"></i></div></div></td><td data-field="id" data-key="1-0-1" class=""><div class="layui-table-cell laytable-cell-1-0-1">10005</div></td><td data-field="realname" data-key="1-0-2" class=""><div class="layui-table-cell laytable-cell-1-0-2">张三</div></td><td data-field="deptname" data-key="1-0-3" class=""><div class="layui-table-cell laytable-cell-1-0-3">计算机科学与技术学院</div></td><td data-field="majorname" data-key="1-0-4" class=""><div class="layui-table-cell laytable-cell-1-0-4">计算机科学与技术</div></td><td data-field="classname" data-key="1-0-5" class=""><div class="layui-table-cell laytable-cell-1-0-5">计科一班</div></td><td data-field="grade" data-key="1-0-6" class=""><div class="layui-table-cell laytable-cell-1-0-6">大二</div></td><td data-field="telephone" data-key="1-0-7" class=""><div class="layui-table-cell laytable-cell-1-0-7">13545678767</div></td><td data-field="status" data-key="1-0-8" align="center" data-content="启用" class=""><div class="layui-table-cell laytable-cell-1-0-8"> <input type="checkbox" name="status" value="undefined" checked="" lay-skin="switch" lay-text="启用|禁用" lay-event="open" lay-filter="modifystatus"><div class="layui-unselect layui-form-switch layui-form-onswitch" lay-skin="_switch"><em>启用</em><i></i></div> </div></td><td data-field="9" data-key="1-0-9" align="center" data-off="true" data-minwidth="130" class="layui-table-col-special"><div class="layui-table-cell laytable-cell-1-0-9"> <a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="detail">查看详情</a> <a class="layui-btn layui-btn-xs data-count-edit" lay-event="edit">修改</a> <a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a> </div></td></tr><tr data-index="6"><td data-field="0" data-key="1-0-0" class="layui-table-col-special"><div class="layui-table-cell laytable-cell-1-0-0 laytable-cell-checkbox"><input type="checkbox" name="layTableCheckbox" lay-skin="primary"><div class="layui-unselect layui-form-checkbox" lay-skin="primary"><i class="layui-icon layui-icon-ok"></i></div></div></td><td data-field="id" data-key="1-0-1" class=""><div class="layui-table-cell laytable-cell-1-0-1">10006</div></td><td data-field="realname" data-key="1-0-2" class=""><div class="layui-table-cell laytable-cell-1-0-2">张三</div></td><td data-field="deptname" data-key="1-0-3" class=""><div class="layui-table-cell laytable-cell-1-0-3">计算机科学与技术学院</div></td><td data-field="majorname" data-key="1-0-4" class=""><div class="layui-table-cell laytable-cell-1-0-4">计算机科学与技术</div></td><td data-field="classname" data-key="1-0-5" class=""><div class="layui-table-cell laytable-cell-1-0-5">计科一班</div></td><td data-field="grade" data-key="1-0-6" class=""><div class="layui-table-cell laytable-cell-1-0-6">大二</div></td><td data-field="telephone" data-key="1-0-7" class=""><div class="layui-table-cell laytable-cell-1-0-7">13545678767</div></td><td data-field="status" data-key="1-0-8" align="center" data-content="启用" class=""><div class="layui-table-cell laytable-cell-1-0-8"> <input type="checkbox" name="status" value="undefined" checked="" lay-skin="switch" lay-text="启用|禁用" lay-event="open" lay-filter="modifystatus"><div class="layui-unselect layui-form-switch layui-form-onswitch" lay-skin="_switch"><em>启用</em><i></i></div> </div></td><td data-field="9" data-key="1-0-9" align="center" data-off="true" data-minwidth="130" class="layui-table-col-special"><div class="layui-table-cell laytable-cell-1-0-9"> <a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="detail">查看详情</a> <a class="layui-btn layui-btn-xs data-count-edit" lay-event="edit">修改</a> <a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a> </div></td></tr><tr data-index="7"><td data-field="0" data-key="1-0-0" class="layui-table-col-special"><div class="layui-table-cell laytable-cell-1-0-0 laytable-cell-checkbox"><input type="checkbox" name="layTableCheckbox" lay-skin="primary"><div class="layui-unselect layui-form-checkbox" lay-skin="primary"><i class="layui-icon layui-icon-ok"></i></div></div></td><td data-field="id" data-key="1-0-1" class=""><div class="layui-table-cell laytable-cell-1-0-1">10007</div></td><td data-field="realname" data-key="1-0-2" class=""><div class="layui-table-cell laytable-cell-1-0-2">张三</div></td><td data-field="deptname" data-key="1-0-3" class=""><div class="layui-table-cell laytable-cell-1-0-3">计算机科学与技术学院</div></td><td data-field="majorname" data-key="1-0-4" class=""><div class="layui-table-cell laytable-cell-1-0-4">计算机科学与技术</div></td><td data-field="classname" data-key="1-0-5" class=""><div class="layui-table-cell laytable-cell-1-0-5">计科一班</div></td><td data-field="grade" data-key="1-0-6" class=""><div class="layui-table-cell laytable-cell-1-0-6">大二</div></td><td data-field="telephone" data-key="1-0-7" class=""><div class="layui-table-cell laytable-cell-1-0-7">13545678767</div></td><td data-field="status" data-key="1-0-8" align="center" data-content="启用" class=""><div class="layui-table-cell laytable-cell-1-0-8"> <input type="checkbox" name="status" value="undefined" checked="" lay-skin="switch" lay-text="启用|禁用" lay-event="open" lay-filter="modifystatus"><div class="layui-unselect layui-form-switch layui-form-onswitch" lay-skin="_switch"><em>启用</em><i></i></div> </div></td><td data-field="9" data-key="1-0-9" align="center" data-off="true" data-minwidth="130" class="layui-table-col-special"><div class="layui-table-cell laytable-cell-1-0-9"> <a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="detail">查看详情</a> <a class="layui-btn layui-btn-xs data-count-edit" lay-event="edit">修改</a> <a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a> </div></td></tr><tr data-index="8"><td data-field="0" data-key="1-0-0" class="layui-table-col-special"><div class="layui-table-cell laytable-cell-1-0-0 laytable-cell-checkbox"><input type="checkbox" name="layTableCheckbox" lay-skin="primary"><div class="layui-unselect layui-form-checkbox" lay-skin="primary"><i class="layui-icon layui-icon-ok"></i></div></div></td><td data-field="id" data-key="1-0-1" class=""><div class="layui-table-cell laytable-cell-1-0-1">10008</div></td><td data-field="realname" data-key="1-0-2" class=""><div class="layui-table-cell laytable-cell-1-0-2">张三</div></td><td data-field="deptname" data-key="1-0-3" class=""><div class="layui-table-cell laytable-cell-1-0-3">计算机科学与技术学院</div></td><td data-field="majorname" data-key="1-0-4" class=""><div class="layui-table-cell laytable-cell-1-0-4">计算机科学与技术</div></td><td data-field="classname" data-key="1-0-5" class=""><div class="layui-table-cell laytable-cell-1-0-5">计科一班</div></td><td data-field="grade" data-key="1-0-6" class=""><div class="layui-table-cell laytable-cell-1-0-6">大二</div></td><td data-field="telephone" data-key="1-0-7" class=""><div class="layui-table-cell laytable-cell-1-0-7">13545678767</div></td><td data-field="status" data-key="1-0-8" align="center" data-content="启用" class=""><div class="layui-table-cell laytable-cell-1-0-8"> <input type="checkbox" name="status" value="undefined" checked="" lay-skin="switch" lay-text="启用|禁用" lay-event="open" lay-filter="modifystatus"><div class="layui-unselect layui-form-switch layui-form-onswitch" lay-skin="_switch"><em>启用</em><i></i></div> </div></td><td data-field="9" data-key="1-0-9" align="center" data-off="true" data-minwidth="130" class="layui-table-col-special"><div class="layui-table-cell laytable-cell-1-0-9"> <a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="detail">查看详情</a> <a class="layui-btn layui-btn-xs data-count-edit" lay-event="edit">修改</a> <a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a> </div></td></tr><tr data-index="9"><td data-field="0" data-key="1-0-0" class="layui-table-col-special"><div class="layui-table-cell laytable-cell-1-0-0 laytable-cell-checkbox"><input type="checkbox" name="layTableCheckbox" lay-skin="primary"><div class="layui-unselect layui-form-checkbox" lay-skin="primary"><i class="layui-icon layui-icon-ok"></i></div></div></td><td data-field="id" data-key="1-0-1" class=""><div class="layui-table-cell laytable-cell-1-0-1">10009</div></td><td data-field="realname" data-key="1-0-2" class=""><div class="layui-table-cell laytable-cell-1-0-2">张三</div></td><td data-field="deptname" data-key="1-0-3" class=""><div class="layui-table-cell laytable-cell-1-0-3">计算机科学与技术学院</div></td><td data-field="majorname" data-key="1-0-4" class=""><div class="layui-table-cell laytable-cell-1-0-4">计算机科学与技术</div></td><td data-field="classname" data-key="1-0-5" class=""><div class="layui-table-cell laytable-cell-1-0-5">计科一班</div></td><td data-field="grade" data-key="1-0-6" class=""><div class="layui-table-cell laytable-cell-1-0-6">大二</div></td><td data-field="telephone" data-key="1-0-7" class=""><div class="layui-table-cell laytable-cell-1-0-7">13545678767</div></td><td data-field="status" data-key="1-0-8" align="center" data-content="启用" class=""><div class="layui-table-cell laytable-cell-1-0-8"> <input type="checkbox" name="status" value="undefined" checked="" lay-skin="switch" lay-text="启用|禁用" lay-event="open" lay-filter="modifystatus"><div class="layui-unselect layui-form-switch layui-form-onswitch" lay-skin="_switch"><em>启用</em><i></i></div> </div></td><td data-field="9" data-key="1-0-9" align="center" data-off="true" data-minwidth="130" class="layui-table-col-special"><div class="layui-table-cell laytable-cell-1-0-9"> <a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="detail">查看详情</a> <a class="layui-btn layui-btn-xs data-count-edit" lay-event="edit">修改</a> <a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a> </div></td></tr></tbody></table></div></div><div class="layui-table-page"><div id="layui-table-page1"><div class="layui-box layui-laypage layui-laypage-default" id="layui-laypage-1"><a href="javascript:;" class="layui-laypage-prev layui-disabled" data-page="0"><i class="layui-icon"></i></a><span class="layui-laypage-curr"><em class="layui-laypage-em"></em><em>1</em></span><a href="javascript:;" data-page="2">2</a><a href="javascript:;" data-page="3">3</a><span class="layui-laypage-spr">…</span><a href="javascript:;" class="layui-laypage-last" title="尾页" data-page="67">67</a><a href="javascript:;" class="layui-laypage-next" data-page="2"><i class="layui-icon"></i></a><span class="layui-laypage-skip">到第<input type="text" min="1" value="1" class="layui-input">页<button type="button" class="layui-laypage-btn">确定</button></span><span class="layui-laypage-count">共 1000 条</span><span class="layui-laypage-limits"><select lay-ignore=""><option value="10">10 条/页</option><option value="15" selected="">15 条/页</option><option value="20">20 条/页</option><option value="25">25 条/页</option><option value="50">50 条/页</option><option value="100">100 条/页</option></select></span></div></div></div><style>.laytable-cell-1-0-0{ width: 50px; }.laytable-cell-1-0-1{ width: 80px; }.laytable-cell-1-0-2{ width: 80px; }.laytable-cell-1-0-3{ width: 180px; }.laytable-cell-1-0-4{ width: 160px; }.laytable-cell-1-0-5{ width: 100px; }.laytable-cell-1-0-6{ width: 70px; }.laytable-cell-1-0-7{ width: 120px; }.laytable-cell-1-0-8{ width: 90px; }.laytable-cell-1-0-9{  }</style></div>
+
+		<!--自定义的列模板-->
+		<script type="text/html" id="statusTableBar">
+			<input type="checkbox" name="status" value="{{d.userid}}" checked lay-skin="switch" lay-text="启用|禁用" lay-event="open" lay-filter="modifystatus" {{ d.status == '1'? 'checked' : '' }}/>
+		</script>
+
+		<script type="text/html" id="currentTableBar">
+			<a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="detail">查看详情</a>
+			<a class="layui-btn  layui-btn-xs data-count-edit" lay-event="edit">修改</a>
+			<a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a>
+		</script>
+
+	</div>
+</div>
+<script src="../lib/layui-v2.6.3/layui.js" charset="utf-8"></script>
+<script>
+	layui.use(['form', 'table'], function () {
+		var $ = layui.jquery,
+				form = layui.form,
+				table = layui.table;
+
+		table.render({
+			elem: '#currentTableId',
+			url: '../api/user.json',
+			toolbar: '#toolbarDemo',
+			defaultToolbar: ['filter', 'exports', 'print', {
+				title: '提示',
+				layEvent: 'LAYTABLE_TIPS',
+				icon: 'layui-icon-tips'
+			}],
+			cols: [[
+				{type: "checkbox", width: 50},
+				{field: 'id', width: 80, title: 'ID', sort: true},
+				{field: 'realname', width: 80, title: '姓名'},
+				{field: 'deptname', width: 180, title: '院系'},
+				{field: 'majorname', width:160, title: '专业'},
+				{field: 'classname', title: '班级', width: 100},
+				{field: 'grade', width: 70, title: '年级', sort: true},
+				{field: 'telephone', width: 120, title: '手机号码'},
+				{
+					field : 'status',
+					width: 90,
+					title : '用户状态',
+					templet : '#statusTableBar',
+					unresize : true,
+					align: "center"
+				},
+				{title: '操作', minWidth: 130, toolbar: '#currentTableBar', align: "center"}
+			]],
+			limits: [10, 15, 20, 25, 50, 100],
+			limit: 15,
+			page: true,
+			skin: 'line'
+		});
+
+		// 监听搜索操作
+		form.on('submit(data-search-btn)', function (data) {
+			var result = JSON.stringify(data.field);
+			layer.alert(result, {
+				title: '最终的搜索信息'
+			});
+
+			//执行搜索重载
+			table.reload('currentTableId', {
+				page: {
+					curr: 1
+				}
+				, where: {
+					searchParams: result
+				}
+			}, 'data');
+
+			return false;
+		});
+
+		form.on('switch(modifystatus)', function(obj){
+			console.log(obj);
+			var param = obj.value;
+		});
+
+		/**
+		 * toolbar监听事件
+		 */
+		table.on('toolbar(currentTableFilter)', function (obj) {
+		    if (obj.event === 'add') {  // 监听添加操作
+				var index = layer.open({
+					title: '添加用户',
+					type: 2,
+					shade: 0.2,
+					maxmin:true,
+					shadeClose: true,
+					area: ['100%', '100%'],
+					content: 'addUser.html',
+				});
+				$(window).on("resize", function () {
+					layer.full(index);
+				});
+			} else if (obj.event === 'delete') {  // 监听删除操作
+				var checkStatus = table.checkStatus('currentTableId')
+						, data = checkStatus.data;
+				layer.alert(JSON.stringify(data));
+			}
+		});
+
+		//监听表格复选框选择
+		table.on('checkbox(currentTableFilter)', function (obj) {
+			console.log(obj)
+		});
+
+		table.on('tool(currentTableFilter)', function (obj) {
+			var data = obj.data;
+			if(obj.event === 'detail'){
+				//layer.alert("查看详情");
+				var index = layer.open({
+					title: '查看详情',
+					type: 2,
+					shade: 0.2,
+					maxmin:true,
+					shadeClose: true,
+					area: ['100%', '100%'],
+					content: 'userDetail.html',
+				});
+				$(window).on("resize", function () {
+					layer.full(index);
+				});
+				return false;
+			} else if (obj.event === 'edit') {
+
+				var index = layer.open({
+					title: '编辑用户',
+					type: 2,
+					shade: 0.2,
+					maxmin:true,
+					shadeClose: true,
+					area: ['100%', '100%'],
+					content: 'editUser.html',
+				});
+				$(window).on("resize", function () {
+					layer.full(index);
+				});
+				return false;
+			} else if (obj.event === 'delete') {
+				layer.confirm('真的删除行么', function (index) {
+					obj.del();
+					layer.close(index);
+				});
+			}
+		});
+
+	});
+
+	// 年选择器（选择入学年份）
+	layui.use('laydate', function(){
+		var laydate = layui.laydate;
+		var initYear;
+		laydate.render({
+			elem: '#year',
+			type: 'year',
+			/* ready和change函数是为了实现选择年份时不用点确定直接关闭  */
+			ready: function(date){ // 控件在打开时触发，回调返回一个参数：初始的日期时间对象
+				initYear = date.year;
+			},
+			change: function(value, date, endDate){ // 年月日时间被切换时都会触发。回调返回三个参数，分别代表：生成的值、日期时间对象、结束的日期时间对象
+				var selectYear = date.year;
+				var differ = selectYear-initYear;
+				if (differ != 15 && differ != -15) {
+					if($(".layui-laydate").length){
+						$("#year").val(value);
+						$(".layui-laydate").remove();
+					}
+				}
+				initYear = selectYear;
+			}
+		});
+	});
+
+</script>
+
+
+</body></html>

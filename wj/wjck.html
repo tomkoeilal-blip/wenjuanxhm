@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>客户满意度调查</title>
+  <!-- 引入Layui CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/layui-src/dist/css/layui.css">
+  <!-- 引入Font Awesome -->
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  
+  <style>
+    body {
+      background-color: #f2f3f5;
+      padding: 20px 0;
+    }
+    
+    .survey-container {
+      max-width: 700px;
+      margin: 0 auto;
+      background-color: #fff;
+      border-radius: 8px;
+      padding: 25px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+    
+    .survey-title {
+      font-size: 22px;
+      color: #333;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+    
+    .survey-description {
+      color: #666;
+      margin-bottom: 25px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .question-item {
+      margin-bottom: 20px;
+      padding-bottom: 15px;
+      border-bottom: 1px dashed #eee;
+    }
+    
+    .question-item:last-child {
+      border-bottom: none;
+    }
+    
+    .question-title {
+      font-size: 16px;
+      color: #333;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+    }
+    
+    .question-number {
+      display: inline-block;
+      width: 22px;
+      height: 22px;
+      line-height: 22px;
+      text-align: center;
+      background-color: #1E9FFF;
+      color: #fff;
+      border-radius: 50%;
+      margin-right: 8px;
+      font-size: 12px;
+    }
+    
+    .required-mark {
+      color: #FF5722;
+      margin-left: 5px;
+    }
+    
+    /* 选项按钮样式 */
+    .option {
+      display: inline-block;
+      padding: 6px 14px;
+      margin-right: 10px;
+      margin-bottom: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s;
+      position: relative;
+    }
+    
+    .option input {
+      position: absolute;
+      opacity: 0;
+    }
+    
+    /* 单选按钮样式 */
+    .radio-option:hover {
+      border-color: #1E9FFF;
+      background-color: #f5faff;
+    }
+    
+    .radio-option input:checked + span {
+      color: #1E9FFF;
+    }
+    
+    .radio-option input:checked {
+      border-color: #1E9FFF;
+      background-color: #e8f4fd;
+    }
+    
+    .radio-option input:checked::after {
+      content: "✓";
+      position: absolute;
+      left: 8px;
+      color: #1E9FFF;
+      font-weight: bold;
+    }
+    
+    /* 复选按钮样式 */
+    .checkbox-option:hover {
+      border-color: #1E9FFF;
+    }
+    
+    .checkbox-option input:checked {
+      background-color: #1E9FFF;
+      color: white;
+    }
+    
+    .checkbox-option input:checked + span {
+      color: #1E9FFF;
+    }
+    
+    /* 评分星星 */
+    .stars {
+      margin-bottom: 10px;
+    }
+    
+    .star {
+      display: inline-block;
+      font-size: 22px;
+      color: #ddd;
+      margin-right: 5px;
+      cursor: pointer;
+    }
+    
+    .star.active {
+      color: #FFB800;
+    }
+    
+    /* 输入框样式 */
+    .layui-input, .layui-textarea {
+      width: 100%;
+      margin-bottom: 5px;
+    }
+    
+    /* 提交按钮 */
+    .submit-btn {
+      display: block;
+      width: 100%;
+      height: 40px;
+      line-height: 40px;
+      background-color: #1E9FFF;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-top: 20px;
+    }
+    
+    .submit-btn:hover {
+      background-color: #0e7cd3;
+    }
+    
+    @media screen and (max-width: 600px) {
+      .option {
+        display: block;
+        width: 100%;
+        margin-right: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="survey-container">
+    <h1 class="survey-title">客户满意度调查</h1>
+    
+    <div class="survey-description">
+      感谢您的参与，您的反馈对我们很重要。本问卷仅需几分钟时间，请根据实际情况填写。
+    </div>
+    
+    <form class="layui-form" lay-filter="survey-form">
+      <!-- 问题1 -->
+      <div class="question-item">
+        <div class="question-title">
+          <span class="question-number">1</span>
+          您的性别 <span class="required-mark">*</span>
+        </div>
+        <label class="option radio-option">
+          <input type="radio" name="gender" value="male" required>
+          <span>男</span>
+        </label>
+        <label class="option radio-option">
+          <input type="radio" name="gender" value="female">
+          <span>女</span>
+        </label>
+      </div>
+      
+      <!-- 问题2 -->
+      <div class="question-item">
+        <div class="question-title">
+          <span class="question-number">2</span>
+          您的年龄段 <span class="required-mark">*</span>
+        </div>
+        <label class="option radio-option">
+          <input type="radio" name="age" value="18-25" required>
+          <span>18-25岁</span>
+        </label>
+        <label class="option radio-option">
+          <input type="radio" name="age" value="26-35">
+          <span>26-35岁</span>
+        </label>
+        <label class="option radio-option">
+          <input type="radio" name="age" value="36-45">
+          <span>36-45岁</span>
+        </label>
+        <label class="option radio-option">
+          <input type="radio" name="age" value="46+">
+          <span>46岁以上</span>
+        </label>
+      </div>
+      
+      <!-- 问题3 -->
+      <div class="question-item">
+        <div class="question-title">
+          <span class="question-number">3</span>
+          您对我们的产品满意度 <span class="required-mark">*</span>
+        </div>
+        <div class="stars">
+          <span class="star" data-value="1"><i class="fa fa-star"></i></span>
+          <span class="star" data-value="2"><i class="fa fa-star"></i></span>
+          <span class="star" data-value="3"><i class="fa fa-star"></i></span>
+          <span class="star" data-value="4"><i class="fa fa-star"></i></span>
+          <span class="star" data-value="5"><i class="fa fa-star"></i></span>
+          <input type="hidden" name="satisfaction" required>
+        </div>
+        <div style="font-size: 12px; color: #666;">
+          <span>不满意</span>
+          <span style="margin-left: 40px;">一般</span>
+          <span style="margin-left: 60px;">满意</span>
+        </div>
+      </div>
+      
+      <!-- 问题4 -->
+      <div class="question-item">
+        <div class="question-title">
+          <span class="question-number">4</span>
+          您认为产品的优点（可多选）
+        </div>
+        <label class="option checkbox-option">
+          <input type="checkbox" name="advantages" value="price">
+          <span>价格合理</span>
+        </label>
+        <label class="option checkbox-option">
+          <input type="checkbox" name="advantages" value="quality">
+          <span>质量可靠</span>
+        </label>
+        <label class="option checkbox-option">
+          <input type="checkbox" name="advantages" value="service">
+          <span>服务好</span>
+        </label>
+      </div>
+      
+      <!-- 问题5 -->
+      <div class="question-item">
+        <div class="question-title">
+          <span class="question-number">5</span>
+          您的建议
+        </div>
+        <textarea name="suggestion" class="layui-textarea" placeholder="请输入您的建议..."></textarea>
+      </div>
+      
+      <button type="button" class="submit-btn" id="submit">提交问卷</button>
+    </form>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/layui-src/dist/layui.js"></script>
+  <script>
+    layui.use(['form', 'layer'], function() {
+      var form = layui.form;
+      var layer = layui.layer;
+      
+      // 星星评分功能
+      var stars = document.querySelectorAll('.star');
+      stars.forEach(star => {
+        star.addEventListener('click', function() {
+          var value = this.getAttribute('data-value');
+          stars.forEach(s => {
+            if(s.getAttribute('data-value') <= value) {
+              s.classList.add('active');
+            } else {
+              s.classList.remove('active');
+            }
+          });
+          document.querySelector('input[name="satisfaction"]').value = value;
+        });
+      });
+      
+      // 提交按钮
+      document.getElementById('submit').addEventListener('click', function() {
+        // 验证必填项
+        var gender = form.val('survey-form').gender;
+        var age = form.val('survey-form').age;
+        var satisfaction = form.val('survey-form').satisfaction;
+        
+        if(!gender || !age || !satisfaction) {
+          layer.msg('请完成所有必填项', {icon: 2});
+          return;
+        }
+        
+        // 提交成功提示
+        layer.msg('感谢您的反馈！', {icon: 1});
+      });
+    });
+  </script>
+</body>
+</html>

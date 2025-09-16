@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>问卷管理</title>
+  <!-- 引入Layui CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/layui-src/dist/css/layui.css">
+  <!-- 引入Font Awesome -->
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  
+  <style>
+    body {
+      background-color: #f2f3f5;
+      padding: 20px;
+    }
+    
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    .header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    
+    .survey-list {
+      background: #fff;
+      border-radius: 6px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      overflow: hidden;
+    }
+    
+    .survey-item {
+      padding: 15px 20px;
+      border-bottom: 1px solid #f0f0f0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .survey-item:last-child {
+      border-bottom: none;
+    }
+    
+    .survey-info {
+      flex-grow: 1;
+    }
+    
+    .survey-title {
+      font-weight: 500;
+      margin-bottom: 5px;
+    }
+    
+    .survey-meta {
+      font-size: 12px;
+      color: #666;
+    }
+    
+    .survey-actions {
+      display: flex;
+      gap: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="header">
+      <h2>我的问卷</h2>
+      <button class="layui-btn" id="new-survey">
+        <i class="fa fa-plus"></i> 新建问卷
+      </button>
+    </div>
+    
+    <div class="survey-list">
+      <!-- 问卷1 -->
+      <div class="survey-item">
+        <div class="survey-info">
+          <div class="survey-title">客户满意度调查</div>
+          <div class="survey-meta">
+            <span>创建于 2023-05-15</span>
+            <span style="margin-left: 15px;">32人已填写</span>
+          </div>
+        </div>
+        <div class="survey-actions">
+          <button class="layui-btn layui-btn-primary layui-btn-sm edit-btn">
+            编辑
+          </button>
+          <button class="layui-btn layui-btn-danger layui-btn-sm delete-btn" data-id="1">
+            删除
+          </button>
+        </div>
+      </div>
+      
+      <!-- 问卷2 -->
+      <div class="survey-item">
+        <div class="survey-info">
+          <div class="survey-title">产品使用反馈</div>
+          <div class="survey-meta">
+            <span>创建于 2023-05-10</span>
+            <span style="margin-left: 15px;">18人已填写</span>
+          </div>
+        </div>
+        <div class="survey-actions">
+          <button class="layui-btn layui-btn-primary layui-btn-sm edit-btn">
+            编辑
+          </button>
+          <button class="layui-btn layui-btn-danger layui-btn-sm delete-btn" data-id="2">
+            删除
+          </button>
+        </div>
+      </div>
+      
+      <!-- 问卷3 -->
+      <div class="survey-item">
+        <div class="survey-info">
+          <div class="survey-title">员工满意度调查</div>
+          <div class="survey-meta">
+            <span>创建于 2023-05-05</span>
+            <span style="margin-left: 15px;">45人已填写</span>
+          </div>
+        </div>
+        <div class="survey-actions">
+          <button class="layui-btn layui-btn-primary layui-btn-sm edit-btn">
+            编辑
+          </button>
+          <button class="layui-btn layui-btn-danger layui-btn-sm delete-btn" data-id="3">
+            删除
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 引入Layui JS -->
+  <script src="https://cdn.jsdelivr.net/npm/layui-src/dist/layui.js"></script>
+  
+  <script>
+    // 初始化Layui模块
+    layui.use(['layer'], function() {
+      var layer = layui.layer;
+      
+      // 删除按钮点击事件
+      document.querySelectorAll('.delete-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+          var surveyId = this.getAttribute('data-id');
+          var surveyTitle = this.closest('.survey-item').querySelector('.survey-title').textContent;
+          
+          // 显示确认对话框
+          layer.confirm(
+            `确定要删除问卷"${surveyTitle}"吗？<br>删除后数据将无法恢复！`,
+            {
+              title: '确认删除',
+              icon: 3,
+              btn: ['确认删除', '取消']
+            },
+            function(index) {
+              // 确认删除回调
+              // 这里可以添加实际删除逻辑，如API调用等
+              console.log(`删除问卷ID: ${surveyId}`);
+              
+              // 模拟删除成功
+              btn.closest('.survey-item').remove();
+              
+              // 关闭对话框
+              layer.close(index);
+              
+              // 显示删除成功提示
+              layer.msg('问卷已删除', {icon: 1});
+            }
+          );
+        });
+      });
+      
+      // 编辑按钮点击事件
+      document.querySelectorAll('.edit-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+          var surveyTitle = this.closest('.survey-item').querySelector('.survey-title').textContent;
+          layer.msg(`进入"${surveyTitle}"的编辑页面`);
+          // 实际应用中这里会跳转到编辑页面
+          // window.location.href = 'survey-editor.html?id=' + surveyId;
+        });
+      });
+      
+      // 新建问卷按钮点击事件
+      document.getElementById('new-survey').addEventListener('click', function() {
+        layer.msg('进入新建问卷页面');
+        // 实际应用中这里会跳转到新建问卷页面
+        // window.location.href = 'survey-editor.html';
+      });
+    });
+  </script>
+</body>
+</html>

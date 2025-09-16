@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>问卷创建工具</title>
+  <!-- 引入Layui CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/layui-src/dist/css/layui.css">
+  <!-- 引入Font Awesome -->
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  
+  <style>
+    body {
+      background-color: #f2f3f5;
+      padding: 20px;
+    }
+    
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    .card {
+      background-color: #fff;
+      border-radius: 2px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    
+    .layui-form-item {
+      margin-bottom: 20px;
+    }
+    
+    .question-type-btn {
+      display: inline-block;
+      height: 38px;
+      line-height: 38px;
+      padding: 0 18px;
+      background-color: #fff;
+      color: #333;
+      white-space: nowrap;
+      text-align: center;
+      font-size: 14px;
+      border: 1px solid #e6e6e6;
+      border-radius: 2px;
+      cursor: pointer;
+      margin-right: 10px;
+      margin-bottom: 10px;
+      transition: all 0.2s;
+    }
+    
+    .question-type-btn:hover {
+      color: #1E9FFF;
+      border-color: #1E9FFF;
+    }
+    
+    .question-type-btn.active {
+      background-color: #1E9FFF;
+      color: #fff;
+      border-color: #1E9FFF;
+    }
+    
+    .survey-frame-item {
+      border: 1px solid #e6e6e6;
+      border-radius: 2px;
+      padding: 15px;
+      margin-bottom: 15px;
+      position: relative;
+    }
+    
+    .remove-frame-item {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      color: #FF5722;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    
+    .remove-frame-item:hover {
+      color: #f53f3f;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="card">
+      <fieldset class="layui-elem-field">
+        <legend><i class="fa fa-list-alt" style="color: #1E9FFF;"></i> 问卷基本信息</legend>
+        <div class="layui-field-box">
+          <form class="layui-form" lay-filter="survey-form">
+            <!-- 创建人 -->
+            <div class="layui-form-item">
+              <label class="layui-form-label">创建人</label>
+              <div class="layui-input-block">
+                <input type="text" name="creator" class="layui-input" placeholder="请输入创建人姓名" required>
+              </div>
+            </div>
+            
+            <!-- 问卷标题 -->
+            <div class="layui-form-item">
+              <label class="layui-form-label">问卷标题</label>
+              <div class="layui-input-block">
+                <input type="text" name="title" class="layui-input" placeholder="请输入问卷标题" required>
+              </div>
+            </div>
+            
+            <!-- 问卷描述 -->
+            <div class="layui-form-item">
+              <label class="layui-form-label">问卷描述</label>
+              <div class="layui-input-block">
+                <textarea name="description" class="layui-textarea" placeholder="请简要描述问卷目的和内容"></textarea>
+              </div>
+            </div>
+          </form>
+        </div>
+      </fieldset>
+    </div>
+    
+    <div class="card">
+      <fieldset class="layui-elem-field">
+        <legend><i class="fa fa-sitemap" style="color: #1E9FFF;"></i> 问卷框架</legend>
+        <div class="layui-field-box">
+          <div class="layui-form-item">
+            <button id="add-frame-item" class="layui-btn layui-btn-primary">
+              <i class="fa fa-plus"></i> 添加框架项
+            </button>
+          </div>
+          
+          <div id="frame-items-container">
+            <!-- 框架项示例 -->
+            <div class="survey-frame-item">
+              <div class="layui-form-item">
+                <label class="layui-form-label">框架标题</label>
+                <div class="layui-input-block">
+                  <input type="text" class="frame-title layui-input" placeholder="例如：基本信息、用户体验评价等" value="基本信息">
+                </div>
+              </div>
+              
+              <div class="layui-form-item">
+                <label class="layui-form-label">框架描述</label>
+                <div class="layui-input-block">
+                  <textarea class="frame-description layui-textarea" placeholder="简要描述本框架包含的内容">收集受访者的基本信息</textarea>
+                </div>
+              </div>
+              
+              <i class="fa fa-times remove-frame-item" title="删除框架项"></i>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+    </div>
+    
+    <div class="card">
+      <fieldset class="layui-elem-field">
+        <legend><i class="fa fa-question-circle" style="color: #1E9FFF;"></i> 问卷问题类型设置</legend>
+        <div class="layui-field-box">
+          <div class="layui-form-item">
+            <label class="layui-form-label">包含问题类型</label>
+            <div class="layui-input-block">
+              <p style="margin-bottom: 10px; color: #666;">请选择本问卷需要包含的问题类型：</p>
+              
+              <div class="question-types">
+                <button class="question-type-btn active" data-type="single">
+                  <i class="fa fa-dot-circle-o"></i> 单选题
+                </button>
+                <button class="question-type-btn active" data-type="multiple">
+                  <i class="fa fa-check-square-o"></i> 多选题
+                </button>
+                <button class="question-type-btn active" data-type="text">
+                  <i class="fa fa-font"></i> 文本题
+                </button>
+                <button class="question-type-btn" data-type="textarea">
+                  <i class="fa fa-align-left"></i> 多行文本
+                </button>
+                <button class="question-type-btn" data-type="rating">
+                  <i class="fa fa-star"></i> 评分题
+                </button>
+                <button class="question-type-btn" data-type="date">
+                  <i class="fa fa-calendar"></i> 日期题
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+    </div>
+    
+    <div class="layui-form-item" style="text-align: center;">
+      <button id="save-survey" class="layui-btn layui-btn-primary">
+        <i class="fa fa-save"></i> 保存问卷设置
+      </button>
+    </div>
+  </div>
+
+  <!-- 引入Layui JS -->
+  <script src="https://cdn.jsdelivr.net/npm/layui-src/dist/layui.js"></script>
+  
+  <script>
+    // 初始化Layui模块
+    layui.use(['form', 'layer'], function() {
+      var form = layui.form;
+      var layer = layui.layer;
+      
+      // 添加框架项
+      document.getElementById('add-frame-item').addEventListener('click', function() {
+        var container = document.getElementById('frame-items-container');
+        var frameCount = container.querySelectorAll('.survey-frame-item').length + 1;
+        
+        var newFrameItem = document.createElement('div');
+        newFrameItem.className = 'survey-frame-item';
+        newFrameItem.innerHTML = `
+          <div class="layui-form-item">
+            <label class="layui-form-label">框架标题</label>
+            <div class="layui-input-block">
+              <input type="text" class="frame-title layui-input" placeholder="例如：基本信息、用户体验评价等" value="框架${frameCount}">
+            </div>
+          </div>
+          
+          <div class="layui-form-item">
+            <label class="layui-form-label">框架描述</label>
+            <div class="layui-input-block">
+              <textarea class="frame-description layui-textarea" placeholder="简要描述本框架包含的内容"></textarea>
+            </div>
+          </div>
+          
+          <i class="fa fa-times remove-frame-item" title="删除框架项"></i>
+        `;
+        
+        container.appendChild(newFrameItem);
+        
+        // 为新添加的框架项绑定删除事件
+        bindRemoveFrameEvent(newFrameItem.querySelector('.remove-frame-item'));
+        
+        layer.msg('已添加新框架项');
+      });
+      
+      // 绑定框架项删除事件
+      function bindRemoveFrameEvent(elem) {
+        elem.addEventListener('click', function() {
+          var frameItem = this.closest('.survey-frame-item');
+          var frameTitle = frameItem.querySelector('.frame-title').value || '该框架项';
+          
+          layer.confirm(`确定要删除"${frameTitle}"吗？`, function(index) {
+            frameItem.remove();
+            layer.close(index);
+          });
+        });
+      }
+      
+      // 初始化已有框架项的删除事件
+      document.querySelectorAll('.remove-frame-item').forEach(elem => {
+        bindRemoveFrameEvent(elem);
+      });
+      
+      // 问题类型选择
+      document.querySelectorAll('.question-type-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+          this.classList.toggle('active');
+        });
+      });
+      
+      // 保存问卷设置
+      document.getElementById('save-survey').addEventListener('click', function() {
+        // 收集表单数据
+        var creator = document.querySelector('input[name="creator"]').value;
+        var title = document.querySelector('input[name="title"]').value;
+        
+        // 简单验证
+        if(!creator) {
+          layer.msg('请输入创建人姓名', {icon: 2});
+          return;
+        }
+        
+        if(!title) {
+          layer.msg('请输入问卷标题', {icon: 2});
+          return;
+        }
+        
+        // 收集框架项
+        var frameItems = [];
+        document.querySelectorAll('.survey-frame-item').forEach(item => {
+          frameItems.push({
+            title: item.querySelector('.frame-title').value,
+            description: item.querySelector('.frame-description').value
+          });
+        });
+        
+        // 收集选中的问题类型
+        var selectedTypes = [];
+        document.querySelectorAll('.question-type-btn.active').forEach(btn => {
+          selectedTypes.push({
+            type: btn.getAttribute('data-type'),
+            name: btn.textContent.trim()
+          });
+        });
+        
+        // 构建问卷数据对象
+        var surveyData = {
+          creator: creator,
+          title: title,
+          description: document.querySelector('textarea[name="description"]').value,
+          frameItems: frameItems,
+          questionTypes: selectedTypes,
+          createTime: new Date().toLocaleString()
+        };
+        
+        // 模拟保存成功
+        console.log('问卷设置数据:', surveyData);
+        
+        layer.alert('问卷框架设置已保存成功！', {
+          icon: 1,
+          title: '保存成功'
+        });
+      });
+      
+      // 初始化表单
+      form.render();
+    });
+  </script>
+</body>
+</html>

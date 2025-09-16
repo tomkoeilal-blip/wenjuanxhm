@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>权限管理</title>
+  <!-- 引入Layui CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/layui-src/dist/css/layui.css">
+  <!-- 引入Font Awesome -->
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  
+  <style>
+    body {
+      background-color: #f2f3f5;
+      margin: 0;
+      padding: 15px;
+    }
+    
+    .title {
+      font-size: 18px;
+      color: #333;
+      margin-bottom: 15px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .tabs-container {
+      background: white;
+      border-radius: 4px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+      margin-bottom: 15px;
+    }
+    
+    .layui-tab-content {
+      padding: 15px;
+    }
+    
+    .tools {
+      margin-bottom: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    
+    .search-box {
+      display: flex;
+      gap: 10px;
+    }
+    
+    .layui-input {
+      width: 200px;
+    }
+    
+    .table-container {
+      overflow: hidden;
+    }
+    
+    .layui-table {
+      margin: 0;
+    }
+    
+    .role-tag {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+    }
+    
+    .role-admin {
+      background-color: #ffebee;
+      color: #e53935;
+    }
+    
+    .role-editor {
+      background-color: #e8f5e9;
+      color: #2e7d32;
+    }
+    
+    .role-viewer {
+      background-color: #fff3e0;
+      color: #ef6c00;
+    }
+    
+    .permission-group {
+      margin-bottom: 15px;
+    }
+    
+    .permission-group-title {
+      font-weight: 500;
+      margin-bottom: 8px;
+      padding-left: 5px;
+      border-left: 2px solid #1E9FFF;
+    }
+    
+    .permission-item {
+      display: inline-block;
+      margin-right: 15px;
+      margin-bottom: 8px;
+    }
+    
+    .layui-btn {
+      padding: 0 10px;
+      height: 28px;
+      line-height: 28px;
+      font-size: 12px;
+    }
+    
+    .pagination {
+      text-align: right;
+      margin-top: 15px;
+    }
+    
+    @media screen and (max-width: 600px) {
+      .search-box {
+        width: 100%;
+      }
+      
+      .layui-input {
+        width: 100%;
+        flex-grow: 1;
+      }
+      
+      .permission-item {
+        display: block;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="title">权限管理</div>
+  
+  <div class="tabs-container">
+    <div class="layui-tab" lay-filter="permission-tabs">
+      <ul class="layui-tab-title">
+        <li class="layui-this">用户管理</li>
+        <li>角色管理</li>
+        <li>权限设置</li>
+      </ul>
+      
+      <!-- 用户管理标签页 -->
+      <div class="layui-tab-content">
+        <div class="layui-tab-item layui-show">
+          <div class="tools">
+            <div class="search-box">
+              <input type="text" placeholder="搜索用户名" class="layui-input">
+              <button class="layui-btn layui-btn-normal"><i class="fa fa-search"></i></button>
+            </div>
+            <button class="layui-btn" id="add-user"><i class="fa fa-plus"></i> 添加用户</button>
+          </div>
+          
+          <div class="table-container">
+            <table class="layui-table" lay-size="sm">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>用户名</th>
+                  <th>姓名</th>
+                  <th>角色</th>
+                  <th>状态</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>admin</td>
+                  <td>系统管理员</td>
+                  <td><span class="role-tag role-admin">管理员</span></td>
+                  <td><span style="color:#009688">启用</span></td>
+                  <td>
+                    <button class="layui-btn layui-btn-primary edit-role" data-id="1">编辑角色</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>editor1</td>
+                  <td>张三</td>
+                  <td><span class="role-tag role-editor">编辑</span></td>
+                  <td><span style="color:#009688">启用</span></td>
+                  <td>
+                    <button class="layui-btn layui-btn-primary edit-role" data-id="2">编辑角色</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td>viewer1</td>
+                  <td>李四</td>
+                  <td><span class="role-tag role-viewer">查看者</span></td>
+                  <td><span style="color:#009688">启用</span></td>
+                  <td>
+                    <button class="layui-btn layui-btn-primary edit-role" data-id="3">编辑角色</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>4</td>
+                  <td>editor2</td>
+                  <td>王五</td>
+                  <td><span class="role-tag role-editor">编辑</span></td>
+                  <td><span style="color:#FF5722">禁用</span></td>
+                  <td>
+                    <button class="layui-btn layui-btn-primary edit-role" data-id="4">编辑角色</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          
+          <div class="pagination">
+            <div class="layui-box layui-laypage layui-laypage-default">
+              <a href="javascript:;" class="layui-laypage-prev">上一页</a>
+              <span class="layui-laypage-curr"><em class="layui-laypage-em"></em><em>1</em></span>
+              <a href="javascript:;">2</a>
+              <a href="javascript:;" class="layui-laypage-next">下一页</a>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 角色管理标签页 -->
+        <div class="layui-tab-item">
+          <div class="tools">
+            <button class="layui-btn" id="add-role"><i class="fa fa-plus"></i> 添加角色</button>
+          </div>
+          
+          <div class="table-container">
+            <table class="layui-table" lay-size="sm">
+              <thead>
+                <tr>
+                  <th>角色ID</th>
+                  <th>角色名称</th>
+                  <th>用户数量</th>
+                  <th>描述</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>管理员</td>
+                  <td>1</td>
+                  <td>拥有系统全部权限</td>
+                  <td>
+                    <button class="layui-btn layui-btn-primary edit-permission" data-id="1">编辑权限</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>编辑</td>
+                  <td>2</td>
+                  <td>可创建和编辑问卷，查看统计数据</td>
+                  <td>
+                    <button class="layui-btn layui-btn-primary edit-permission" data-id="2">编辑权限</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td>查看者</td>
+                  <td>1</td>
+                  <td>仅可查看问卷和统计数据</td>
+                  <td>
+                    <button class="layui-btn layui-btn-primary edit-permission" data-id="3">编辑权限</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        
+        <!-- 权限设置标签页 -->
+        <div class="layui-tab-item">
+          <div class="tools">
+            <div class="layui-form">
+              <div class="layui-form-item">
+                <label class="layui-form-label">选择角色</label>
+                <div class="layui-input-block">
+                  <select name="role" lay-filter="role-select">
+                    <option value="1">管理员</option>
+                    <option value="2">编辑</option>
+                    <option value="3">查看者</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="permission-settings">
+            <!-- 问卷管理权限组 -->
+            <div class="permission-group">
+              <div class="permission-group-title">问卷管理</div>
+              <div class="layui-form">
+                <div class="permission-item">
+                  <input type="checkbox" name="perm" title="创建问卷" checked lay-skin="primary">
+                </div>
+                <div class="permission-item">
+                  <input type="checkbox" name="perm" title="编辑问卷" checked lay-skin="primary">
+                </div>
+                <div class="permission-item">
+                  <input type="checkbox" name="perm" title="删除问卷" checked lay-skin="primary">
+                </div>
+                <div class="permission-item">
+                  <input type="checkbox" name="perm" title="发布问卷" checked lay-skin="primary">
+                </div>
+              </div>
+            </div>
+            
+            <!-- 数据管理权限组 -->
+            <div class="permission-group">
+              <div class="permission-group-title">数据管理</div>
+              <div class="layui-form">
+                <div class="permission-item">
+                  <input type="checkbox" name="perm" title="查看答卷" checked lay-skin="primary">
+                </div>
+                <div class="permission-item">
+                  <input type="checkbox" name="perm" title="导出数据" checked lay-skin="primary">
+                </div>
+                <div class="permission-item">
+                  <input type="checkbox" name="perm" title="查看统计" checked lay-skin="primary">
+                </div>
+                <div class="permission-item">
+                  <input type="checkbox" name="perm" title="删除答卷" checked lay-skin="primary">
+                </div>
+              </div>
+            </div>
+            
+            <!-- 系统管理权限组 -->
+            <div class="permission-group">
+              <div class="permission-group-title">系统管理</div>
+              <div class="layui-form">
+                <div class="permission-item">
+                  <input type="checkbox" name="perm" title="用户管理" checked lay-skin="primary">
+                </div>
+                <div class="permission-item">
+                  <input type="checkbox" name="perm" title="角色管理" checked lay-skin="primary">
+                </div>
+                <div class="permission-item">
+                  <input type="checkbox" name="perm" title="权限设置" checked lay-skin="primary">
+                </div>
+              </div>
+            </div>
+            
+            <div style="margin-top: 20px; text-align: right;">
+              <button class="layui-btn" id="save-permissions">保存权限设置</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- 编辑角色弹窗内容 -->
+  <div id="edit-role-form" style="display: none; padding: 15px;">
+    <div class="layui-form">
+      <div class="layui-form-item">
+        <label class="layui-form-label">用户名</label>
+        <div class="layui-input-block">
+          <input type="text" value="editor1" disabled class="layui-input">
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">角色</label>
+        <div class="layui-input-block">
+          <select name="role">
+            <option value="1">管理员</option>
+            <option value="2" selected>编辑</option>
+            <option value="3">查看者</option>
+          </select>
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">状态</label>
+        <div class="layui-input-block">
+          <input type="radio" name="status" value="1" title="启用" checked>
+          <input type="radio" name="status" value="0" title="禁用">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/layui-src/dist/layui.js"></script>
+  <script>
+    layui.use(['element', 'form', 'layer'], function() {
+      var element = layui.element;
+      var form = layui.form;
+      var layer = layui.layer;
+      
+      // 编辑用户角色
+      document.querySelectorAll('.edit-role').forEach(btn => {
+        btn.addEventListener('click', function() {
+          var userId = this.getAttribute('data-id');
+          layer.open({
+            type: 1,
+            title: '编辑角色',
+            area: ['400px', 'auto'],
+            content: document.getElementById('edit-role-form'),
+            btn: ['确定', '取消'],
+            yes: function(index) {
+              layer.close(index);
+              layer.msg('角色已更新', {icon: 1});
+            }
+          });
+        });
+      });
+      
+      // 添加用户
+      document.getElementById('add-user').addEventListener('click', function() {
+        layer.prompt({title: '请输入用户名', formType: 0}, function(username, index) {
+          layer.close(index);
+          layer.prompt({title: '请输入姓名', formType: 0}, function(fullname, index) {
+            layer.close(index);
+            layer.msg(`用户 ${username} (${fullname}) 已添加`, {icon: 1});
+          });
+        });
+      });
+      
+      // 添加角色
+      document.getElementById('add-role').addEventListener('click', function() {
+        layer.prompt({title: '请输入角色名称', formType: 0}, function(roleName, index) {
+          layer.close(index);
+          layer.prompt({title: '请输入角色描述', formType: 2}, function(desc, index) {
+            layer.close(index);
+            layer.msg(`角色 ${roleName} 已添加`, {icon: 1});
+          });
+        });
+      });
+      
+      // 编辑角色权限
+      document.querySelectorAll('.edit-permission').forEach(btn => {
+        btn.addEventListener('click', function() {
+          var roleId = this.getAttribute('data-id');
+          // 切换到权限设置标签页
+          element.tabChange('permission-tabs', 2);
+          // 根据角色ID设置选中的角色
+          form.val('role-select', {
+            "role": roleId
+          });
+          layer.msg('已切换到权限设置', {icon: 0});
+        });
+      });
+      
+      // 保存权限设置
+      document.getElementById('save-permissions').addEventListener('click', function() {
+        layer.confirm('确定要保存权限设置吗？', {
+          title: '确认保存'
+        }, function(index) {
+          layer.close(index);
+          layer.msg('权限设置已保存', {icon: 1});
+        });
+      });
+      
+      // 角色选择变化时的处理
+      form.on('select(role-select)', function(data) {
+        layer.msg(`已选择角色ID: ${data.value}`, {icon: 0});
+        // 实际应用中可以根据角色ID加载对应的权限设置
+      });
+    });
+  </script>
+</body>
+</html>
