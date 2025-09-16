@@ -1,0 +1,119 @@
+{
+  "code": 0,
+  "msg": "",
+  "count": 1000,
+  "data": [
+    {
+      "id": 10010,
+      "realname": "李梦琪",
+      "deptname": "计算机科学与技术学院",
+      "majorname": "计算机科学与技术",
+      "classname": "计科三班",
+      "grade": "大一",
+      "telephone": "13678901234",
+      "qq": "123456789",
+      "job": "学习委员",
+      "status": "启用"
+    },
+    {
+      "id": 10011,
+      "realname": "王浩然",
+      "deptname": "电子信息工程学院",
+      "majorname": "电子信息工程",
+      "classname": "电信二班",
+      "grade": "大三",
+      "telephone": "13987654321",
+      "qq": "987654321",
+      "job": "班长",
+      "status":"启用"
+    },{
+      "id": 10012,
+      "realname": "张雅雯",
+      "deptname": "机械电子工程学院",
+      "majorname": "机械设计制造及其自动化",
+      "classname": "机电一班",
+      "grade": "大二",
+      "telephone": "13865437890",
+      "qq": "456789123",
+      "job": "文艺委员",
+      "status": "启用"
+    },{
+      "id": 10013,
+      "realname": "陈宇轩",
+      "deptname": "计算机科学与技术学院",
+      "majorname": "软件工程",
+      "classname": "软工四班",
+      "grade": "大四",
+      "telephone": "13756789012",
+      "qq": "789123456",
+      "job": "毕业设计组长",
+      "status":"启用"
+    },{
+      "id": 10014,
+      "realname": "刘思雨",
+      "deptname": "电子信息工程学院",
+      "majorname": "通信工程",
+      "classname": "通信一班",
+      "grade": "大二",
+      "telephone": "13590123456",
+      "qq": "234567891",
+      "job": "生活委员",
+      "status": "禁用"
+    },{
+      "id": 10015,
+      "realname": "赵天宇",
+      "deptname": "机械电子工程学院",
+      "majorname": "智能制造工程",
+      "classname": "智能二班",
+      "grade": "大三",
+      "telephone": "13489012345",
+      "qq": "891234567",
+      "job": "体育委员",
+      "status": "启用"
+    },{
+      "id": 10016,
+      "realname": "周欣怡",
+      "deptname": "计算机科学与技术学院",
+      "majorname": "网络工程",
+      "classname": "网工一班",
+      "grade": "大一",
+      "telephone": "13378901234",
+      "qq": "345678912",
+      "job": "心理委员",
+      "status": "启用"
+    },{
+      "id": 10017,
+      "realname": "吴梓豪",
+      "deptname": "电子信息工程学院",
+      "majorname": "人工智能",
+      "classname": "AI三班",
+      "grade": "大二",
+      "telephone": "13267890123",
+      "qq": "678912345",
+      "job": "科创小组组长",
+      "status": "启用"
+    },{
+      "id": 10018,
+      "realname": "郑雨桐",
+      "deptname": "机械电子工程学院",
+      "majorname": "机器人工程",
+      "classname": "机器一班",
+      "grade": "大四",
+      "telephone": "13156789012",
+      "qq": "567891234",
+      "job": "就业联络员",
+      "status": "启用"
+    },{
+      "id": 10019,
+      "realname": "马浩宇",
+      "deptname": "计算机科学与技术学院",
+      "majorname": "数据科学与大数据技术",
+      "classname": "数据二班",
+      "grade": "大三",
+      "telephone": "13045678901",
+      "qq": "456789012",
+      "job": "学习小组组长",
+      "status": "启用"
+    }
+  ]
+}

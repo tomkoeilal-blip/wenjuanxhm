@@ -1,0 +1,124 @@
+{
+  "homeInfo": {
+    "title": "首页",
+    "href": "page/home.html"
+  },
+  "logoInfo": {
+    "title": "问卷调查系统",
+    "image": "images/favicon.ico",
+    "href": ""
+  },
+  "menuInfo": [
+    {
+      "title": "常规管理",
+      "icon": "fa fa-address-book",
+      "href": "",
+      "target": "_self",
+      "child": [
+        {
+          "title": "首页",
+          "href": "page/home.html",
+          "icon": "fa fa-home",
+          "target": "_self"
+        },
+        {
+          "title": "用户管理",
+          "href": "",
+          "icon": "fa fa-group",
+          "target": "_self",
+          "child": [
+          {
+            "title": "添加用户",
+            "href": "user/addUser.html",
+            "icon": "fa fa-plus-square-o",
+            "target": "_self"
+          }, {
+            "title": "查询用户",
+            "href": "user/askUser.html",
+            "icon": "fa fa-search",
+            "target": "_self"
+          }
+        ]
+        },
+        {
+          "title": "问卷管理",
+          "href": "",
+          "icon": "fa fa-institution",
+          "target": "_self",
+          "child": [
+            {
+              "title": "问卷创建",
+              "href": "wj/wjcj.html",
+              "icon": "fa fa-plus-square-o",
+              "target": "_self"
+            }, {
+              "title": "问卷查看",
+              "href": "wj/wjck.html",
+              "icon": "fa fa-plus-circle",
+              "target": "_self"
+            }, {
+              "title": "问卷编辑",
+              "href": "wj/wjbj.html",
+              "icon": "fa fa-search",
+              "target": "_self"
+            }, {
+              "title": "问卷删除",
+              "href": "wj/wjsc.html",
+              "icon": "fa fa-search-plus",
+              "target": "_self"
+            }
+          ]
+        },
+        
+        {
+          "title": "答卷管理",
+          "href": "",
+          "icon": "fa fa-trophy",
+          "target": "_self",
+          "child": [
+            {
+              "title": "添加答卷信息",
+              "href": "dj/tjdj.html",
+              "icon": "fa fa-plus-square-o",
+              "target": "_self"
+            }, {
+              "title": "查询答卷信息",
+              "href": "dj/ckdj.html",
+              "icon": "fa fa-search",
+              "target": "_self"
+            }
+          ]
+        },
+        {
+          "title": "数据统计",
+          "href": "sj/sjtj.html",
+          "icon": "fa fa-paw",
+          "target": "_self"
+          
+        },
+        {
+          "title": "受访者",
+          "href": "",
+          "icon": "fa fa-eye",
+          "target": "_self",
+          "child": [
+            {
+              "title": "受访者管理",
+              "href": "sfz/sfzgl.html",
+              "icon": "fa fa-plus-square-o",
+              "target": "_self"
+            }
+          ]
+		  
+        },
+		{
+		  "title": "权限管理",
+		  "href": "qxgl/qxgl.html",
+		  "icon": "fa fa-paw",
+		  "target": "_self"
+		  
+		}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>添加答卷</title>
+  <!-- 引入Layui CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/layui-src/dist/css/layui.css">
+  <!-- 引入Font Awesome -->
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  
+  <style>
+    body {
+      background-color: #f2f3f5;
+      padding: 20px;
+    }
+    
+    .container {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    
+    .card {
+      background: #fff;
+      border-radius: 6px;
+      padding: 20px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    
+    .title {
+      font-size: 18px;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .question {
+      margin-bottom: 20px;
+    }
+    
+    .question-title {
+      margin-bottom: 10px;
+      font-weight: 500;
+    }
+    
+    .required {
+      color: #FF5722;
+    }
+    
+    .actions {
+      margin-top: 30px;
+      text-align: center;
+    }
+    
+    .actions button {
+      margin: 0 5px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="card">
+      <div class="title">
+        <i class="fa fa-list-alt"></i> 客户满意度调查 - 添加答卷
+      </div>
+      
+      <form class="layui-form" lay-filter="response-form">
+        <!-- 问题1：性别 -->
+        <div class="question">
+          <div class="question-title">
+            1. 您的性别 <span class="required">*</span>
+          </div>
+          <div class="layui-form-item">
+            <label class="layui-form-radio">
+              <input type="radio" name="gender" value="男" title="男">
+            </label>
+            <label class="layui-form-radio">
+              <input type="radio" name="gender" value="女" title="女">
+            </label>
+          </div>
+        </div>
+        
+        <!-- 问题2：年龄段 -->
+        <div class="question">
+          <div class="question-title">
+            2. 您的年龄段 <span class="required">*</span>
+          </div>
+          <div class="layui-form-item">
+            <label class="layui-form-radio">
+              <input type="radio" name="age" value="18-25" title="18-25岁">
+            </label>
+            <label class="layui-form-radio">
+              <input type="radio" name="age" value="26-35" title="26-35岁">
+            </label>
+            <label class="layui-form-radio">
+              <input type="radio" name="age" value="36+" title="36岁以上">
+            </label>
+          </div>
+        </div>
+        
+        <!-- 问题3：满意度 -->
+        <div class="question">
+          <div class="question-title">
+            3. 产品满意度 <span class="required">*</span>
+          </div>
+          <div class="layui-form-item">
+            <select name="satisfaction" lay-verify="required">
+              <option value="">请选择</option>
+              <option value="1">不满意</option>
+              <option value="2">一般</option>
+              <option value="3">满意</option>
+              <option value="4">很满意</option>
+            </select>
+          </div>
+        </div>
+        
+        <!-- 问题4：建议 -->
+        <div class="question">
+          <div class="question-title">
+            4. 您的建议
+          </div>
+          <div class="layui-form-item">
+            <textarea name="suggestion" class="layui-textarea" placeholder="请输入建议..."></textarea>
+          </div>
+        </div>
+        
+        <!-- 操作按钮 -->
+        <div class="actions">
+          <button type="button" class="layui-btn layui-btn-primary" id="cancel">取消</button>
+          <button type="button" class="layui-btn" id="save">保存</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/layui-src/dist/layui.js"></script>
+  <script>
+    layui.use(['form', 'layer'], function() {
+      var form = layui.form;
+      var layer = layui.layer;
+      
+      // 保存按钮
+      document.getElementById('save').addEventListener('click', function() {
+        // 验证必填项
+        var gender = form.val('response-form').gender;
+        var age = form.val('response-form').age;
+        var satisfaction = form.val('response-form').satisfaction;
+        
+        if(!gender || !age || !satisfaction) {
+          layer.msg('请完成所有必填项', {icon: 2});
+          return;
+        }
+        
+        // 模拟保存
+        layer.msg('答卷保存成功', {icon: 1});
+      });
+      
+      // 取消按钮
+      document.getElementById('cancel').addEventListener('click', function() {
+        layer.confirm('确定要取消吗？', function(index) {
+          layer.close(index);
+          // 实际应用中可跳转回列表页
+          // window.location.href = 'response-list.html';
+        });
+      });
+      
+      form.render();
+    });
+  </script>
+</body>
+</html>
