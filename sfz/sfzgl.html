@@ -5,11 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>受访者管理</title>
   <!-- 引入Layui CSS -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/layui-src/dist/css/layui.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/layui@2.6.8/dist/css/layui.css">
   <!-- 引入Font Awesome -->
   <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
   
   <style>
+    /* 保持原有样式不变 */
     body {
       background-color: #f2f3f5;
       margin: 0;
@@ -213,81 +214,90 @@
     </div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/layui-src/dist/layui.js"></script>
+  <!-- 修复：使用稳定版本的Layui -->
+  <script src="https://cdn.jsdelivr.net/npm/layui@2.6.8/dist/layui.js"></script>
   <script>
-    layui.use(['layer'], function() {
-      var layer = layui.layer;
-      
-      // 受访者数据
-      const respondents = [
-        {id: 1001, name: '张三', gender: '男', phone: '13800138000', age: '26-35岁', tag: '活跃', count: 5},
-        {id: 1002, name: '李四', gender: '女', phone: '13900139000', age: '18-25岁', tag: '新用户', count: 1},
-        {id: 1003, name: '王五', gender: '男', phone: '13600136000', age: '36-45岁', tag: '活跃', count: 3},
-        {id: 1004, name: '赵六', gender: '女', phone: '13500135000', age: '26-35岁', tag: '新用户', count: 2}
-      ];
-      
-      // 查看详情
-      document.querySelectorAll('.view-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-          const id = parseInt(this.getAttribute('data-id'));
-          const respondent = respondents.find(item => item.id === id);
+    // 确保DOM加载完成后再执行
+    document.addEventListener('DOMContentLoaded', function() {
+      layui.use(['layer', 'jquery'], function() {
+        var layer = layui.layer;
+        var $ = layui.jquery; // 引入jQuery
+        
+        // 受访者数据
+        const respondents = [
+          {id: 1001, name: '张三', gender: '男', phone: '13800138000', age: '26-35岁', tag: '活跃', count: 5},
+          {id: 1002, name: '李四', gender: '女', phone: '13900139000', age: '18-25岁', tag: '新用户', count: 1},
+          {id: 1003, name: '王五', gender: '男', phone: '13600136000', age: '36-45岁', tag: '活跃', count: 3},
+          {id: 1004, name: '赵六', gender: '女', phone: '13500135000', age: '26-35岁', tag: '新用户', count: 2}
+        ];
+        
+        // 更新详情弹窗内容
+        function updateDetailModal(respondent) {
+          document.getElementById('detail-id').textContent = respondent.id;
+          document.getElementById('detail-name').textContent = respondent.name;
+          document.getElementById('detail-gender').textContent = respondent.gender;
+          document.getElementById('detail-phone').textContent = respondent.phone;
+          document.getElementById('detail-age').textContent = respondent.age;
+          document.getElementById('detail-count').textContent = respondent.count;
+        }
+        
+        // 查看详情 - 使用Layui的事件绑定方式
+        $(document).on('click', '.view-btn', function() {
+          const id = parseInt($(this).data('id'));
+          const loadingIndex = layer.load(1);
           
-          if (respondent) {
-            // 更新详情内容
-            document.getElementById('detail-id').textContent = respondent.id;
-            document.getElementById('detail-name').textContent = respondent.name;
-            document.getElementById('detail-gender').textContent = respondent.gender;
-            document.getElementById('detail-phone').textContent = respondent.phone;
-            document.getElementById('detail-age').textContent = respondent.age;
-            document.getElementById('detail-count').textContent = respondent.count;
+          setTimeout(() => {
+            const respondent = respondents.find(item => item.id === id);
+            layer.close(loadingIndex);
             
-            // 打开弹窗
-            layer.open({
-              type: 1,
-              title: '受访者详情',
-              area: ['300px', 'auto'],
-              content: document.getElementById('detail-modal')
-            });
+            if (respondent) {
+              updateDetailModal(respondent);
+              
+              layer.open({
+                type: 1,
+                title: '受访者详情',
+                area: ['300px', 'auto'],
+                content: $('#detail-modal') // 使用jQuery选择器
+              });
+            } else {
+              layer.msg('未找到该受访者信息', {icon: 2});
+            }
+          }, 300);
+        });
+        
+        // 搜索功能
+        $('#search-btn').click(function() {
+          const keyword = $('#search-input').val().trim();
+          if (keyword) {
+            layer.msg(`搜索: ${keyword}`, {icon: 0});
+          } else {
+            layer.msg('请输入搜索关键词', {icon: 2});
           }
         });
-      });
-      
-      // 搜索功能
-      document.getElementById('search-btn').addEventListener('click', function() {
-        const keyword = document.getElementById('search-input').value.trim();
-        if (keyword) {
-          layer.msg(`搜索: ${keyword}`, {icon: 0});
-          // 实际应用中可添加搜索逻辑
-        } else {
-          layer.msg('请输入搜索关键词', {icon: 2});
-        }
-      });
-      
-      // 添加受访者
-      document.getElementById('add-btn').addEventListener('click', function() {
-        layer.prompt({title: '请输入受访者姓名', formType: 0}, function(name, index) {
-          layer.close(index);
-          layer.msg(`已添加受访者: ${name}`, {icon: 1});
-          // 实际应用中可添加添加逻辑
+        
+        // 添加受访者
+        $('#add-btn').click(function() {
+          layer.prompt({title: '请输入受访者姓名', formType: 0}, function(name, index) {
+            layer.close(index);
+            layer.msg(`已添加受访者: ${name}`, {icon: 1});
+          });
         });
-      });
-      
-      // 分页功能
-      document.querySelectorAll('.pagination a:not(.prev):not(.next)').forEach(page => {
-        page.addEventListener('click', function() {
-          document.querySelectorAll('.pagination a').forEach(el => el.classList.remove('active'));
-          this.classList.add('active');
-          layer.msg(`切换到第${this.textContent}页`, {icon: 0});
+        
+        // 分页功能
+        $(document).on('click', '.pagination a:not(.prev):not(.next)', function() {
+          $('.pagination a').removeClass('active');
+          $(this).addClass('active');
+          layer.msg(`切换到第${$(this).text()}页`, {icon: 0});
         });
-      });
-      
-      // 上一页/下一页
-      document.querySelector('.pagination .prev').addEventListener('click', function() {
-        layer.msg('上一页', {icon: 0});
-      });
-      
-      document.querySelector('.pagination .next').addEventListener('click', function() {
-        layer.msg('下一页', {icon: 0});
+        
+        // 上一页/下一页
+        $('.pagination .prev').click(function() {
+          layer.msg('上一页', {icon: 0});
+        });
+        
+        $('.pagination .next').click(function() {
+          layer.msg('下一页', {icon: 0});
+        });
       });
     });
   </script>
