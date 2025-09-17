@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>权限管理</title>
-  <!-- 引入Layui CSS -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/layui-src/dist/css/layui.css">
+  <!-- 引入稳定版本的Layui CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/layui@2.6.8/dist/css/layui.css">
   <!-- 引入Font Awesome -->
   <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
   
@@ -271,7 +271,7 @@
         <!-- 权限设置标签页 -->
         <div class="layui-tab-item">
           <div class="tools">
-            <div class="layui-form">
+            <div class="layui-form" lay-filter="role-form">
               <div class="layui-form-item">
                 <label class="layui-form-label">选择角色</label>
                 <div class="layui-input-block">
@@ -351,7 +351,7 @@
   
   <!-- 编辑角色弹窗内容 -->
   <div id="edit-role-form" style="display: none; padding: 15px;">
-    <div class="layui-form">
+    <div class="layui-form" lay-filter="edit-role-form">
       <div class="layui-form-item">
         <label class="layui-form-label">用户名</label>
         <div class="layui-input-block">
@@ -378,22 +378,28 @@
     </div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/layui-src/dist/layui.js"></script>
+  <!-- 使用稳定版本的Layui -->
+  <script src="https://cdn.jsdelivr.net/npm/layui@2.6.8/dist/layui.js"></script>
   <script>
-    layui.use(['element', 'form', 'layer'], function() {
-      var element = layui.element;
-      var form = layui.form;
-      var layer = layui.layer;
-      
-      // 编辑用户角色
-      document.querySelectorAll('.edit-role').forEach(btn => {
-        btn.addEventListener('click', function() {
-          var userId = this.getAttribute('data-id');
+    // 确保DOM加载完成后执行
+    document.addEventListener('DOMContentLoaded', function() {
+      layui.use(['element', 'form', 'layer', 'jquery'], function() {
+        var element = layui.element;
+        var form = layui.form;
+        var layer = layui.layer;
+        var $ = layui.jquery; // 显式获取Layui的jQuery
+        
+        // 渲染表单元素
+        form.render();
+        
+        // 编辑用户角色 - 使用jQuery事件委托
+        $(document).on('click', '.edit-role', function() {
+          var userId = $(this).data('id');
           layer.open({
             type: 1,
             title: '编辑角色',
             area: ['400px', 'auto'],
-            content: document.getElementById('edit-role-form'),
+            content: $('#edit-role-form'), // 使用jQuery选择器
             btn: ['确定', '取消'],
             yes: function(index) {
               layer.close(index);
@@ -401,60 +407,58 @@
             }
           });
         });
-      });
-      
-      // 添加用户
-      document.getElementById('add-user').addEventListener('click', function() {
-        layer.prompt({title: '请输入用户名', formType: 0}, function(username, index) {
-          layer.close(index);
-          layer.prompt({title: '请输入姓名', formType: 0}, function(fullname, index) {
+        
+        // 添加用户
+        $('#add-user').click(function() {
+          layer.prompt({title: '请输入用户名', formType: 0}, function(username, index) {
             layer.close(index);
-            layer.msg(`用户 ${username} (${fullname}) 已添加`, {icon: 1});
+            layer.prompt({title: '请输入姓名', formType: 0}, function(fullname, index) {
+              layer.close(index);
+              layer.msg(`用户 ${username} (${fullname}) 已添加`, {icon: 1});
+            });
           });
         });
-      });
-      
-      // 添加角色
-      document.getElementById('add-role').addEventListener('click', function() {
-        layer.prompt({title: '请输入角色名称', formType: 0}, function(roleName, index) {
-          layer.close(index);
-          layer.prompt({title: '请输入角色描述', formType: 2}, function(desc, index) {
+        
+        // 添加角色
+        $('#add-role').click(function() {
+          layer.prompt({title: '请输入角色名称', formType: 0}, function(roleName, index) {
             layer.close(index);
-            layer.msg(`角色 ${roleName} 已添加`, {icon: 1});
+            layer.prompt({title: '请输入角色描述', formType: 2}, function(desc, index) {
+              layer.close(index);
+              layer.msg(`角色 ${roleName} 已添加`, {icon: 1});
+            });
           });
         });
-      });
-      
-      // 编辑角色权限
-      document.querySelectorAll('.edit-permission').forEach(btn => {
-        btn.addEventListener('click', function() {
-          var roleId = this.getAttribute('data-id');
+        
+        // 编辑角色权限
+        $(document).on('click', '.edit-permission', function() {
+          var roleId = $(this).data('id');
           // 切换到权限设置标签页
           element.tabChange('permission-tabs', 2);
           // 根据角色ID设置选中的角色
-          form.val('role-select', {
-            "role": roleId
-          });
+          $('select[name="role"]').val(roleId);
+          form.render('select'); // 重新渲染下拉框
           layer.msg('已切换到权限设置', {icon: 0});
         });
-      });
-      
-      // 保存权限设置
-      document.getElementById('save-permissions').addEventListener('click', function() {
-        layer.confirm('确定要保存权限设置吗？', {
-          title: '确认保存'
-        }, function(index) {
-          layer.close(index);
-          layer.msg('权限设置已保存', {icon: 1});
+        
+        // 保存权限设置
+        $('#save-permissions').click(function() {
+          layer.confirm('确定要保存权限设置吗？', {
+            title: '确认保存'
+          }, function(index) {
+            layer.close(index);
+            layer.msg('权限设置已保存', {icon: 1});
+          });
         });
-      });
-      
-      // 角色选择变化时的处理
-      form.on('select(role-select)', function(data) {
-        layer.msg(`已选择角色ID: ${data.value}`, {icon: 0});
-        // 实际应用中可以根据角色ID加载对应的权限设置
+        
+        // 角色选择变化时的处理
+        form.on('select(role-select)', function(data) {
+          layer.msg(`已选择角色ID: ${data.value}`, {icon: 0});
+          // 实际应用中可以根据角色ID加载对应的权限设置
+        });
       });
     });
   </script>
 </body>
 </html>
+    
